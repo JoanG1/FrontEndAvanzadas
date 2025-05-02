@@ -4,6 +4,7 @@ import RegisterPage from "./pages/Register";
 import LoginPage from "./pages/Login";
 import CodigoValidacion from "./pages/CodigoValidacion"; 
 import ValidarCodigo from "./pages/ValidarCodigo";
+import RecuperarCuenta from "./pages/RecuperarCuenta";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} /> {/* RUTA PARA LOGIN */}
         <Route path="/codigo-validacion" element={<CodigoValidacion />} /> {/* RUTA PARA CODIGO DE VALIDACION */}
         <Route path="/validar-codigo" element={<ValidarCodigo />} /> {/* RUTA PARA VALIDACION DE CODIGO */}
+        <Route path="/recuperar-cuenta" element={<RecuperarCuenta />} /> {/* RUTA PARA RECUPERACION DE CUENTA */}
       </Routes>
     </div>
   );

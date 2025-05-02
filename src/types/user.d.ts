@@ -34,6 +34,11 @@ export interface CodigoValidacionFormProps {
 export interface ValidarCodigoFormProps {
 	email: string;
 }
+
+
+//TIPADO DE FORMULARIO DE RECUPERACION DE CUENTA
+export interface RecuperarCuentaFormProps {}
+
   
 
 

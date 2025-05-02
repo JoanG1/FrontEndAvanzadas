@@ -16,6 +16,7 @@ export const ValidarCodigoForm: FC<ValidarCodigoFormProps> = ({ email }) => {
   const handleValidar = () => {
     if (codigo === "1234") {
       console.log(JSON.stringify({ mensaje: "Código correcto", codigo }));
+      //AQUI IRIA LA LOGICA QUE USA EL SERVICIO "/VALIDACION-CODIGO"
     } else {
       console.log(JSON.stringify({ error: "Código inválido", codigo }));
     }
