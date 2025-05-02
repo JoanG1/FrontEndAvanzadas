@@ -1,10 +1,9 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { Button } from '../../../components/ui/Button';//BOTON REUTILIZABLE
-import '../../../styles/LoginForm.css';// HOJA DE ESTILOS DEL LOGIN
-import { FormDataLogin } from '../../../types/user';//TIPADO DEL FORMATO DEL FORMULARIO
-
-//FORMULARIO DE INGRESO A LOGIN, DATOS (CORREO, CONTRASEÑA)
+import { Button } from '../../../components/ui/Button';
+import '../../../styles/LoginForm.css';
+import { FormDataLogin } from '../../../types/user';
+import { isValidEmail, isStrongPassword } from '../../../lib/validators'; // ✅ Importación
 
 const LoginForm: React.FC = () => {
   const {
@@ -14,9 +13,9 @@ const LoginForm: React.FC = () => {
   } = useForm<FormDataLogin>();
 
   const onSubmit = (data: FormDataLogin) => {
-      console.log(JSON.stringify(data, null, 2));
-      //AQUI IRIA LA LOGICA QUE USA EL SERVICIO "/LOGIN"
-    };
+    console.log(JSON.stringify(data, null, 2));
+    // Lógica de autenticación aquí
+  };
 
   return (
     <div className="login-container">
@@ -25,10 +24,8 @@ const LoginForm: React.FC = () => {
         <input
           {...register('correo', {
             required: 'Correo requerido',
-            pattern: {
-              value: /^\S+@\S+$/i,
-              message: 'Correo no válido',
-            },
+            validate: (value) =>
+              isValidEmail(value) || 'Correo no válido', // ✅ Usando helper
           })}
           placeholder="Correo"
           className="login-input"
@@ -38,25 +35,28 @@ const LoginForm: React.FC = () => {
         <input
           {...register('contrasena', {
             required: 'Contraseña requerida',
-            minLength: {
-              value: 6,
-              message: 'Debe tener al menos 6 caracteres',
-            },
+            validate: (value) =>
+              isStrongPassword(value) ||
+              'Debe tener al menos 8 caracteres, una mayúscula, una minúscula y un número', // ✅ Usando helper
           })}
           type="password"
           placeholder="Contraseña"
           className="login-input"
         />
-        {errors.contrasena && <p className="login-error">{errors.contrasena.message}</p>}
+        {errors.contrasena && (
+          <p className="login-error">{errors.contrasena.message}</p>
+        )}
 
-        <Button>
-          Iniciar sesión
-        </Button>
+        <Button>Iniciar sesión</Button>
       </form>
 
       <div className="login-footer">
-        <p>¿No tienes cuenta? <a href="/register">Regístrate</a></p>
-        <p><a href="/forgot-password">¿Olvidaste tu contraseña?</a></p>
+        <p>
+          ¿No tienes cuenta? <a href="/register">Regístrate</a>
+        </p>
+        <p>
+          <a href="/forgot-password">¿Olvidaste tu contraseña?</a>
+        </p>
       </div>
     </div>
   );
