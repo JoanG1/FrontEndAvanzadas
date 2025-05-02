@@ -14,8 +14,8 @@ const LoginForm: React.FC = () => {
   } = useForm<FormDataLogin>();
 
   const onSubmit = (data: FormDataLogin) => {
-    console.log("Login Data:", data);
-  };
+      console.log(JSON.stringify(data, null, 2));
+    };
 
   return (
     <div className="login-container">
