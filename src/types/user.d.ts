@@ -17,4 +17,12 @@ export interface FormDataRegister {
 };
 
 
+//TIPADO DE FORMULARIO DE INICIO DE SESIÓN
+export interface FormDataLogin {
+	correo: string;
+	contrasena: string;
+  }
+  
+
+
   
