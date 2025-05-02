@@ -1,4 +1,5 @@
 import { FC } from "react";
+import "../stylesUi/Button.css"; // ✅ Importar estilos
 
 interface ButtonProps {
   children: React.ReactNode;
@@ -8,7 +9,7 @@ interface ButtonProps {
 
 export const Button: FC<ButtonProps> = ({ children, onClick, disabled }) => (
   <button
-    className="bg-blue-600 text-white px-4 py-2 rounded disabled:opacity-50"
+    className="custom-button"
     onClick={onClick}
     disabled={disabled}
   >

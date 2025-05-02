@@ -1,8 +1,12 @@
-// src/features/user/components/RegisterForm.tsx
 import React from 'react';
-import { useForm } from 'react-hook-form'; //Libreria para manejar formularios
-import '../../../styles/RegisterForm.css'; //Hoja de estilos del componente RegisterForm
-import { FormDataRegister } from "../../../types/user";
+import { useForm } from 'react-hook-form';
+import { Button } from '../../../components/ui/Button'; //BOTON REUTILIZABLE
+import '../../../styles/RegisterForm.css';// HOJA DE ESTILOS DEL REGISTRO
+import { FormDataRegister } from "../../../types/user";//TIPADO DEL FORMATO DEL FORMULARIO
+
+
+//FORMULARIO DE INGRESO A REGISTRO, DATOS (NOMBRE, CORREO, TELEFONO, CIUDAD, DIRECCION, CONTRASEÑA)
+
 
 const RegisterForm: React.FC = () => {
 	const {
@@ -34,7 +38,7 @@ const RegisterForm: React.FC = () => {
 				<input {...register('telefono', {
 					required: 'Teléfono requerido',
 					pattern: {
-						value: /^[0-9]{7,15}$/,
+						value: /^[0-9]{7,15}$/i,
 						message: 'Número no válido',
 					},
 				})} placeholder="Teléfono" className="register-input" />
@@ -55,9 +59,9 @@ const RegisterForm: React.FC = () => {
 				})} type="password" placeholder="Contraseña" className="register-input" />
 				{errors.contrasena && <p className="register-error">{errors.contrasena.message}</p>}
 
-				<button type="submit" className="register-button">
+				<Button>
 					Continuar
-				</button>
+				</Button>
 			</form>
 		</div>
 	);

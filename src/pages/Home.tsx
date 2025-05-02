@@ -1,6 +1,6 @@
 // src/pages/Home.tsx
 import React from 'react';
-import Map from '../components/ui/Map';
+import Map from '../components/ui/Map';//TRAEMOS COMPONENTE A RENDERIZAR
 
 const Home: React.FC = () => {
 	return (
