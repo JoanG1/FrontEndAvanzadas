@@ -29,7 +29,13 @@ export interface CodigoValidacionFormProps {
 	email: string;
   }
   
+
+//TIPADO DE FORMULARIO VALIDACION DEL CODIGO
+export interface ValidarCodigoFormProps {
+	email: string;
+}
   
+
 
 
   

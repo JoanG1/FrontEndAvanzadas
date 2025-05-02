@@ -2,7 +2,8 @@ import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import RegisterPage from "./pages/Register";
 import LoginPage from "./pages/Login";
-import CodigoValidacion from "./pages/CodigoValidacion"; // ✅ NUEVO
+import CodigoValidacion from "./pages/CodigoValidacion"; 
+import ValidarCodigo from "./pages/ValidarCodigo";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Route path="/register" element={<RegisterPage />} /> {/* RUTA PARA REGISTRO */}
         <Route path="/login" element={<LoginPage />} /> {/* RUTA PARA LOGIN */}
         <Route path="/codigo-validacion" element={<CodigoValidacion />} /> {/* RUTA PARA CODIGO DE VALIDACION */}
+        <Route path="/validar-codigo" element={<ValidarCodigo />} /> {/* RUTA PARA VALIDACION DE CODIGO */}
       </Routes>
     </div>
   );

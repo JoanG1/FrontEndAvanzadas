@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC } from "react";
 import { Button } from "../../../components/ui/Button";
 import type { CodigoValidacionFormProps } from "../../../types/user";
 import "../../../styles/CodigoValidacionForm.css";
@@ -11,27 +11,15 @@ const ocultarEmail = (email: string): string => {
 };
 
 export const CodigoValidacionForm: FC<CodigoValidacionFormProps> = ({ email }) => {
-  const [codigo, setCodigo] = useState("");
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    if (/^\d{0,4}$/.test(value)) {
-      setCodigo(value);
-    }
-  };
-
   const handleEnviarCodigo = () => {
-    if (codigo.length === 4) {
-        console.log(JSON.stringify({ codigo }));
-      //AQUI IRIA LA LOGICA QUE USA EL SERVICIO "/CODIGO-VALIDACION"
-    } else {
-      alert("El código debe tener 4 dígitos.");
-    }
+    const codigoSimulado = "1234"; // CODIGO QUEMADO
+    console.log(JSON.stringify({ mensaje: "Código enviado", codigo: codigoSimulado }));
+    //AQUI IRIA LA LOGICA QUE USA EL SERVICIO "/CODIGO-VALIDACION"
   };
 
   const handleEditarCorreo = () => {
     console.log("Volver a editar correo");
-    // Aquí podría ir navegación o actualización de estado global
+    // AQUI PODRIA IR LA NAVEGACION AL REGISTRO PARA EDITAR EL CORREO
   };
 
   return (
@@ -39,25 +27,14 @@ export const CodigoValidacionForm: FC<CodigoValidacionFormProps> = ({ email }) =
       <h2 className="codigo-validacion-title">Verificación de código</h2>
 
       <p className="codigo-validacion-texto">
-        A continuación se le enviará un código de activación al correo
-        proporcionado <strong>{ocultarEmail(email)}</strong>. Si es correcto, da click en <strong>Enviar código</strong>. 
-        Para editar el correo, da vuelta atrás.
+        A continuación se enviará un código de activación al correo
+        proporcionado <strong>{ocultarEmail(email)}</strong>. Haz clic en <strong>Enviar código</strong> para continuar. 
+        Para editar el correo, vuelve atrás.
       </p>
 
-      <div className="codigo-validacion-form">
-        <input
-          type="text"
-          value={codigo}
-          onChange={handleChange}
-          maxLength={4}
-          placeholder="Ingrese código de 4 dígitos"
-          className="codigo-validacion-input"
-        />
-
-        <div className="codigo-validacion-buttons">
-          <Button onClick={handleEnviarCodigo}>Enviar código</Button>
-          <Button onClick={handleEditarCorreo}>Editar correo</Button>
-        </div>
+      <div className="codigo-validacion-buttons">
+        <Button onClick={handleEnviarCodigo}>Enviar código</Button>
+        <Button onClick={handleEditarCorreo}>Editar correo</Button>
       </div>
     </div>
   );
