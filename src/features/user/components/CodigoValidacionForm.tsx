@@ -10,11 +10,7 @@ const ocultarEmail = (email: string): string => {
   return `${ocultoLocal}@${ocultoDomain}`;
 };
 
-export const CodigoValidacionForm: FC<CodigoValidacionFormProps> = ({
-  email,
-  onSubmit,
-  onEditarCorreo,
-}) => {
+export const CodigoValidacionForm: FC<CodigoValidacionFormProps> = ({ email }) => {
   const [codigo, setCodigo] = useState("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -26,10 +22,16 @@ export const CodigoValidacionForm: FC<CodigoValidacionFormProps> = ({
 
   const handleEnviarCodigo = () => {
     if (codigo.length === 4) {
-      onSubmit(codigo);
+        console.log(JSON.stringify({ codigo }));
+      //AQUI IRIA LA LOGICA QUE USA EL SERVICIO "/CODIGO-VALIDACION"
     } else {
       alert("El código debe tener 4 dígitos.");
     }
+  };
+
+  const handleEditarCorreo = () => {
+    console.log("Volver a editar correo");
+    // Aquí podría ir navegación o actualización de estado global
   };
 
   return (
@@ -54,7 +56,7 @@ export const CodigoValidacionForm: FC<CodigoValidacionFormProps> = ({
 
         <div className="codigo-validacion-buttons">
           <Button onClick={handleEnviarCodigo}>Enviar código</Button>
-          <Button onClick={onEditarCorreo}>Editar correo</Button>
+          <Button onClick={handleEditarCorreo}>Editar correo</Button>
         </div>
       </div>
     </div>

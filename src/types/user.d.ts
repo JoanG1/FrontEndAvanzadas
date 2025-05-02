@@ -22,6 +22,13 @@ export interface FormDataLogin {
 	correo: string;
 	contrasena: string;
   }
+
+
+//TIPADO DE FORMULARIO CODIGO DE VALIDACIÓN
+export interface CodigoValidacionFormProps {
+	email: string;
+  }
+  
   
 
 

@@ -15,6 +15,7 @@ const LoginForm: React.FC = () => {
 
   const onSubmit = (data: FormDataLogin) => {
       console.log(JSON.stringify(data, null, 2));
+      //AQUI IRIA LA LOGICA QUE USA EL SERVICIO "/LOGIN"
     };
 
   return (

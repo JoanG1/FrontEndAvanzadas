@@ -17,6 +17,7 @@ const RegisterForm: React.FC = () => {
 
 	const onSubmit = (data: FormDataRegister) => {
 		console.log(JSON.stringify(data, null, 2));
+		//AQUI IRIA LA LOGICA QUE USA EL SERVICIO "/REGISTER"
 	};
 
 	return (
