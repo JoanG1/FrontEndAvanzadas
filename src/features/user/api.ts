@@ -10,7 +10,7 @@ export async function loginUser(email: string, password: string): Promise<User> 
 
 
 //CONEXION API A SERVICIO DE REGISTRO
-export async function registerUser (nombre: String, email: String, telefono: String, ciudad: String, direccion: String, password: String ): Promise<FormDataRegister>{
+export async function registerUser (nombre: string, email: string, telefono: string, ciudad: string, direccion: string, password: string ): Promise<FormDataRegister>{
   const response = await apiClient.post("/register", { email, password, telefono, ciudad, direccion, nombre });
   return response.data;
 }

@@ -23,7 +23,7 @@
 
 	return (
 		<div className="register-container">
-		<h1 className="register-title">Registro</h1>
+		<h1 className="register-title">Registrate</h1>
 		<form onSubmit={handleSubmit(onSubmit)} className="register-form">
 			<input
 			{...register('nombre', {

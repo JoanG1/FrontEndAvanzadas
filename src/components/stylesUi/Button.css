@@ -1,19 +1,23 @@
 .custom-button {
-    background-color: #2563eb;
+    background-color: #2C0844;        /* Fondo oscuro elegante */
     color: white;
-    padding: 0.5rem 1rem;
+    padding: 0.75rem 2rem;            /* Botón más grande y cómodo */
     border: none;
-    border-radius: 0.375rem;
+    border-radius: 1rem;              /* Bordes bien redondeados */
+    font-weight: bold;
+    font-size: 1.1rem;                /* Texto más visible */
     cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .custom-button:hover {
-    background-color: #1d4ed8;
-  }
-  
-  .custom-button:disabled {
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);  /* Sombra para profundidad */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4); /* Mejora contraste del texto */
+}
+
+.custom-button:hover {
+    background-color: #4B116C;        /* Color más claro al pasar el mouse */
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);  /* Sombra más fuerte al hacer hover */
+}
+
+.custom-button:disabled {
     opacity: 0.5;
     cursor: not-allowed;
-  }
-  
+}
