@@ -1,6 +1,8 @@
 // src/pages/Home.tsx
 import React from 'react';
 import Map from '../components/ui/Map';
+import { UserProfileIcon } from "../components/ui/UserProfileIcon";
+
 
 const Home: React.FC = () => {
 	return (
@@ -9,6 +11,7 @@ const Home: React.FC = () => {
         <h1 className="text-2xl font-bold mb-4 w-fit mx-auto text-center">Mapa con Mapbox</h1>
 
       		<div className="w-full max-w-6xl flex justify-center">
+				<UserProfileIcon />
         		<Map />
       		</div>
     </div>

@@ -1,0 +1,46 @@
+.user-profile-icon {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 10;
+}
+
+.user-icon-circle {
+  width: 60px;
+  height: 60px;
+  background-color: #6b16ba; /* púrpura */
+  border: 3px solid #facc15; /* amarillo */
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+}
+
+.user-icon-circle:hover {
+  transform: scale(1.05);
+}
+
+.user-icon {
+  color: white;
+  font-size: 28px;
+}
+
+.notification-badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  background-color: #6b16ba;
+  color: white;
+  font-size: 12px;
+  width: 20px;
+  height: 20px;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  box-shadow: 0 0 0 2px white;
+}
