@@ -1,9 +1,10 @@
 /* src/styles/Map.css */
 .map-container {
-	width: 80%;
+	max-width: 70%;
 	height: 500px;
-	margin: 0 auto;
-	border-radius: 0.5rem;
-	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-	background-color: #f0f0f0; /* Opcional: para notar el contenedor */
+    margin: 0 auto;
+    padding: 1.5rem;
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }

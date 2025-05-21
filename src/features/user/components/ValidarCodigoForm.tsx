@@ -3,7 +3,12 @@ import { Button } from "../../../components/ui/Button";
 import type { ValidarCodigoFormProps } from "../../../types/user";
 import "../../../styles/ValidarCodigoForm.css";
 
-export const ValidarCodigoForm: FC<ValidarCodigoFormProps> = ({ email }) => {
+interface Props extends ValidarCodigoFormProps {
+  onSuccess: () => void;
+  onError: () => void;
+}
+
+export const ValidarCodigoForm: FC<Props> = ({ email, onSuccess, onError }) => {
   const [codigo, setCodigo] = useState("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -16,9 +21,10 @@ export const ValidarCodigoForm: FC<ValidarCodigoFormProps> = ({ email }) => {
   const handleValidar = () => {
     if (codigo === "1234") {
       console.log(JSON.stringify({ mensaje: "Código correcto", codigo }));
-      //AQUI IRIA LA LOGICA QUE USA EL SERVICIO "/VALIDACION-CODIGO"
+      onSuccess(); // 🚀 Disparamos éxito
     } else {
       console.log(JSON.stringify({ error: "Código inválido", codigo }));
+      onError();
     }
   };
 

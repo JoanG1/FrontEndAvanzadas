@@ -1,41 +1,33 @@
-import React, { useRef, useEffect, useState } from 'react';
-import mapboxgl from 'mapbox-gl'; // Librería Mapbox
-import 'mapbox-gl/dist/mapbox-gl.css'; // Estilos por defecto de Mapbox
-import '../../styles/Map.css'; // Estilos personalizados del mapa
+import React, { useRef, useEffect } from 'react';
+import mapboxgl from 'mapbox-gl';
+import 'mapbox-gl/dist/mapbox-gl.css';
+import '../../styles/Map.css';
 
-// Token de acceso público de Mapbox
 mapboxgl.accessToken = 'pk.eyJ1Ijoiam9hbmdvbWV6MSIsImEiOiJjbWE0bjJiaG4wOXFsMmlxNXBwNWc0ZTN3In0.Tg7Z_jnFxx3eqR31R1g8UA';
 
 const Map: React.FC = () => {
 	const mapContainer = useRef<HTMLDivElement>(null);
-	const [isMounted, setIsMounted] = useState(false);
+	const mapRef = useRef<mapboxgl.Map | null>(null);
 
 	useEffect(() => {
-		setIsMounted(true);
-	}, []);
+		if (!mapContainer.current) return;
 
-	useEffect(() => {
-		if (!isMounted || !mapContainer.current) return;
-
-		const containerHeight = mapContainer.current.offsetHeight;
-		if (containerHeight === 0) return;
-
-		const map = new mapboxgl.Map({
+		mapRef.current = new mapboxgl.Map({
 			container: mapContainer.current,
 			style: 'mapbox://styles/mapbox/dark-v11',
-			center: [-74.5, 40], // Coordenadas iniciales (NYC)
-			zoom: 15,
-			pitch: 30, // 🎯 Inclinación de la cámara para vista 3D
-			bearing: -30, // 🎯 Rotación de la cámara
-			antialias: true, // Mejora visual
+			center: [-74.5, 40],
+			zoom: 5,
+			pitch: 30,
+			bearing: -30,
+			antialias: true,
 		});
 
-		// Agrega controles de navegación (zoom, rotación)
-		map.addControl(new mapboxgl.NavigationControl());
+		mapRef.current.addControl(new mapboxgl.NavigationControl());
 
-		map.on('load', () => {
-			// Agrega capa de edificios en 3D
-			map.addLayer({
+		mapRef.current.on('load', () => {
+			mapRef.current?.resize(); // ✅ fuerza redimensionamiento
+
+			mapRef.current?.addLayer({
 				id: '3d-buildings',
 				source: 'composite',
 				'source-layer': 'building',
@@ -51,8 +43,10 @@ const Map: React.FC = () => {
 			});
 		});
 
-		return () => map.remove();
-	}, [isMounted]);
+		return () => {
+			mapRef.current?.remove();
+		};
+	}, []);
 
 	return <div ref={mapContainer} className="map-container" />;
 };

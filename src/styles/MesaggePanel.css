@@ -1,0 +1,19 @@
+.message-panel-container {
+  background: #fefefe;
+  padding: 2rem;
+  border-radius: 0.5rem;
+  max-width: 400px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.message-panel-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.message-panel-texto {
+  font-size: 1rem;
+  color: #4b5563; /* gray-700 */
+}

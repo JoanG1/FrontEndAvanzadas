@@ -1,0 +1,25 @@
+.activacion-error-container {
+  background: #fefefe;
+  padding: 2rem;
+  border-radius: 0.5rem;
+  max-width: 400px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.activacion-error-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.activacion-error-texto {
+  margin-bottom: 1.5rem;
+  color: #b91c1c; /* rojo fuerte */
+}
+
+.activacion-error-botones {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}

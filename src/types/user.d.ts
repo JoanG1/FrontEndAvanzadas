@@ -40,6 +40,18 @@ export interface ValidarCodigoFormProps {
 export interface RecuperarCuentaFormProps {}
 
   
+// TIPADO DE FORMULARIO DE CAMBIO DE CONTRASEÑA
+export interface CambiarContrasenaFormProps {
+  actual: string;
+  nueva: string;
+  confirmarNueva: string;
+}
+
+interface MessagePanelProps {
+  titulo: string;
+  mensaje: string;
+}
+
 
 
 
