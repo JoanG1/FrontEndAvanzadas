@@ -6,6 +6,7 @@ import CodigoValidacion from "./pages/CodigoValidacion";
 import ValidarCodigo from "./pages/ValidarCodigo";
 import RecuperarCuenta from "./pages/RecuperarCuenta";
 import CambiarContrasena from "./pages/CambiarContrasena"; // 👈 Nuevo import
+import ReportPage from "./pages/ReportPage";
 
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
         <Route path="/validar-codigo" element={<ValidarCodigo />} /> {/* RUTA PARA VALIDACION DE CODIGO */}
         <Route path="/recuperar-cuenta" element={<RecuperarCuenta />} /> {/* RUTA PARA RECUPERACION DE CUENTA */}
         <Route path="/cambiar-contrasena" element={<CambiarContrasena />} /> {/* RUTA PARA CAMBIO DE CONTRASEÑA */}
+        <Route path="/nuevo-reporte" element={<ReportPage />} /> {/* RUTA PARA CREAR DE REPORTE */}
       </Routes>
       </div>
     </div>
