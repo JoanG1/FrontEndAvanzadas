@@ -8,6 +8,7 @@ import RecuperarCuenta from "./pages/RecuperarCuenta";
 import CambiarContrasena from "./pages/CambiarContrasena";
 import ReportPage from "./pages/ReportPage";
 import MisReportes from "./pages/MisReportes"; 
+import ReporteFeed from "./pages/Reportes";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route path="/cambiar-contrasena" element={<CambiarContrasena />} />
           <Route path="/nuevo-reporte" element={<ReportPage />} />
           <Route path="/mis-reportes" element={<MisReportes />} /> 
+          <Route path="/reportes-feed" element={<ReporteFeed />} /> 
         </Routes>
       </div>
 
