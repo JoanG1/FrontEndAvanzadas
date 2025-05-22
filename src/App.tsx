@@ -9,6 +9,9 @@ import CambiarContrasena from "./pages/CambiarContrasena";
 import ReportPage from "./pages/ReportPage";
 import MisReportes from "./pages/MisReportes"; 
 import ReporteFeed from "./pages/Reportes";
+import MisNotificaciones from "./pages/MisNotificaciones";
+import MisReportesPendientes from "./pages/MisReportesPendientes";
+import MisReportesRechazados from "./pages/MisReportesRechazados";
 
 function App() {
   return (
@@ -25,6 +28,9 @@ function App() {
           <Route path="/nuevo-reporte" element={<ReportPage />} />
           <Route path="/mis-reportes" element={<MisReportes />} /> 
           <Route path="/reportes-feed" element={<ReporteFeed />} /> 
+          <Route path="/mis-notificaciones" element={<MisNotificaciones />} /> 
+          <Route path="/mis-reportes-pendientes" element={<MisReportesPendientes />} />
+          <Route path="/mis-reportes-rechazados" element={<MisReportesRechazados />} />
         </Routes>
       </div>
 

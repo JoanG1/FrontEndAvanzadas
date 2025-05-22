@@ -4,9 +4,10 @@ import "../../../styles/Reports.css";
 
 interface Props {
   usuario: UserInfo | null;
+  titulo: string;
 }
 
-export const ReportesHeader: FC<Props> = ({ usuario }) => {
+export const ReportesHeader: FC<Props> = ({ usuario, titulo }) => {
   const [horaActual, setHoraActual] = useState("");
 
   useEffect(() => {
@@ -34,7 +35,7 @@ export const ReportesHeader: FC<Props> = ({ usuario }) => {
         </div>
       </div>
 
-      <h2 className="header-title">MIS REPORTES</h2>
+      <h2 className="header-title">{titulo}</h2>
 
       <div className="fecha-hora">{horaActual}</div>
     </div>

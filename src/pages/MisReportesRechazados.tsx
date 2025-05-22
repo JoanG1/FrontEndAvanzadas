@@ -11,7 +11,7 @@
     return (
         <div className="mis-reportes-container">
             <UserProfileIcon />
-        <ReportesHeader usuario={usuario} titulo={"MIS REPORTES"} />
+        <ReportesHeader usuario={usuario} titulo={"MIS REPORTES RECHAZADOS"} />
         <ReportList reportes={reportes} />
         </div>
     );
