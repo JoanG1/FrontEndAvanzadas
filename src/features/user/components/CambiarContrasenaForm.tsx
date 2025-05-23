@@ -36,45 +36,45 @@ export const CambiarContrasenaForm: FC<CambiarContrasenaFormProps> = ({ onSucces
       return;
     }
 
-    // Simulación de llamada a API exitosa
     console.log("Contraseña cambiada correctamente");
-    onSuccess(); // 🚀 Disparamos mensaje de éxito
+    onSuccess();
   };
 
   return (
-    <div className="cambiar-contrasena-container">
-      <h2 className="cambiar-contrasena-title">Cambio de contraseña</h2>
-      <p className="cambiar-contrasena-texto">Cambia tu contraseña actual</p>
+      <div className="fondo-degradado">
+        <div className="cambiar-contrasena-container">
+          <h2 className="cambiar-contrasena-title">Cambio de contraseña</h2>
+          <p className="cambiar-contrasena-texto">Cambia tu contraseña actual</p>
 
-      <div className="cambiar-contrasena-form">
-        <input
-          type="password"
-          value={actual}
-          onChange={(e) => setActual(e.target.value)}
-          placeholder="Contraseña actual"
-          className="cambiar-contrasena-input"
-        />
-        <input
-          type="password"
-          value={nueva}
-          onChange={(e) => setNueva(e.target.value)}
-          placeholder="Nueva contraseña"
-          className="cambiar-contrasena-input"
-        />
-        <input
-          type="password"
-          value={confirmarNueva}
-          onChange={(e) => setConfirmarNueva(e.target.value)}
-          placeholder="Confirmar nueva contraseña"
-          className="cambiar-contrasena-input"
-        />
+          <div className="cambiar-contrasena-form">
+            <input
+                type="password"
+                value={actual}
+                onChange={(e) => setActual(e.target.value)}
+                placeholder="Contraseña actual"
+                className="cambiar-contrasena-input"
+            />
+            <input
+                type="password"
+                value={nueva}
+                onChange={(e) => setNueva(e.target.value)}
+                placeholder="Nueva contraseña"
+                className="cambiar-contrasena-input"
+            />
+            <input
+                type="password"
+                value={confirmarNueva}
+                onChange={(e) => setConfirmarNueva(e.target.value)}
+                placeholder="Confirmar nueva contraseña"
+                className="cambiar-contrasena-input"
+            />
 
-        {errorCoincidencia && (
-          <span className="cambiar-contrasena-error">{errorCoincidencia}</span>
-        )}
-
-        <Button onClick={handleSubmit}>Cambiar contraseña</Button>
+            {errorCoincidencia && (
+                <span className="cambiar-contrasena-error">{errorCoincidencia}</span>
+            )}
+            <Button onClick={handleSubmit}>Cambiar contraseña</Button>
+          </div>
+        </div>
       </div>
-    </div>
   );
 };

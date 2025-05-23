@@ -31,12 +31,13 @@ body {
 
 
 .login-title {
-  text-align: center;
-  font-size: 2.2rem; /* un poco más grande */
-  font-weight: 900;  /* más grueso */
-  color: #2C0844;
-  margin-bottom: 2rem;
-  text-shadow: 2px 2px 6px rgba(44, 8, 68, 0.8); /* sombra para destacar */
+  font-size: 2.5rem;         /* Aumenta el tamaño */
+  color: #2C0844;            /* Color oscuro */
+  font-weight: 900;          /* Extra negrita */
+  text-align: center;        /* Centrado */
+  margin-bottom: 1.5rem;     /* Espacio inferior */
+  text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.6); /* Sombra clara */
+  letter-spacing: 1px;       /* Espaciado entre letras */
 }
 
 

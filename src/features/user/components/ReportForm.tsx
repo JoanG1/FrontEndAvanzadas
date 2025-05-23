@@ -1,25 +1,18 @@
 import React, { useState } from "react";
-import { ReportFormData, ReportFormProps } from "../../../types/report";
+import { ReportFormData } from "../../../types/report";
 import "../../../styles/ReportForm.css";
 
 const CATEGORIES = ["Incidente", "Reclamo", "Sugerencia", "Otro"];
 
-export const ReportForm: React.FC<ReportFormProps> = ({
-  initialData,
-  onSubmit,
-  submitButtonText = "PREVISUALIZAR REPORTE",
-  onBack,
-}) => {
-  const [formData, setFormData] = useState<ReportFormData>(
-    initialData || {
-      title: "",
-      category: "",
-      isImportant: false,
-      location: "",
-      description: "",
-      images: [],
-    }
-  );
+export const ReportForm: React.FC = () => {
+  const [formData, setFormData] = useState<ReportFormData>({
+    title: "",
+    category: "",
+    isImportant: false,
+    location: "",
+    description: "",
+    images: [],
+  });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
 
@@ -51,6 +44,7 @@ export const ReportForm: React.FC<ReportFormProps> = ({
 
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
+
     if (!formData.title.trim()) newErrors.title = "Este campo es obligatorio.";
     if (!formData.category.trim()) newErrors.category = "Selecciona una categoría.";
     if (!formData.location.trim()) newErrors.location = "Este campo es obligatorio.";
@@ -61,18 +55,24 @@ export const ReportForm: React.FC<ReportFormProps> = ({
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = () => {
+  const handlePreview = () => {
     if (validateForm()) {
-      onSubmit(formData);
+      console.log("PREVISUALIZANDO:", formData);
     } else {
       console.log("Errores encontrados.");
     }
   };
 
+  const handleBack = () => {
+    window.history.back();
+  };
+
   return (
     <div className="report-form-wrapper">
       <form className="report-form">
+
         <div className="top-section">
+          {/* Imagen */}
           <div className="image-upload">
             <label htmlFor="image-upload" className="image-placeholder">
               {formData.images.length > 0 ? formData.images.length : "+"}
@@ -108,6 +108,7 @@ export const ReportForm: React.FC<ReportFormProps> = ({
             </div>
           </div>
 
+          {/* Título, Categoría, Importante */}
           <div className="right-section">
             <div className="input-group small">
               <label>TITULO</label>
@@ -151,11 +152,11 @@ export const ReportForm: React.FC<ReportFormProps> = ({
         </div>
 
         <div className="button-group">
-          <button type="button" className="back-button" onClick={onBack || (() => window.history.back())}>
+          <button type="button" className="back-button" onClick={handleBack}>
             ATRAS
           </button>
-          <button type="button" className="preview-button" onClick={handleSubmit}>
-            {submitButtonText}
+          <button type="button" className="preview-button" onClick={handlePreview}>
+            PREVISUALIZAR REPORTE
           </button>
         </div>
       </form>

@@ -1,31 +1,93 @@
-.validar-codigo-container {
-    background: #f9f9f9;
-    padding: 2rem;
-    border-radius: 0.5rem;
-    max-width: 400px;
-    margin: 0 auto;
-  }
-  
-  .validar-codigo-title {
-    font-size: 1.5rem;
-    font-weight: bold;
-    margin-bottom: 1rem;
-  }
-  
-  .validar-codigo-texto {
-    margin-bottom: 1.5rem;
-  }
-  
-  .validar-codigo-form {
+html, body, #root {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+.validar-codigo-wrapper {
     display: flex;
-    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    background-image: url('public/fondo.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+
+.validar-codigo-container {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(10px);
+    border-radius: 1rem;
+    padding: 2rem 2.5rem;
+    max-width: 420px;
+    width: 100%;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+    text-align: center;
+}
+
+.validar-codigo-title {
+    font-size: 2.5rem;         /* Aumenta el tamaño */
+    color: #2C0844;            /* Color oscuro */
+    font-weight: 900;          /* Extra negrita */
+    text-align: center;        /* Centrado */
+    margin-bottom: 1.5rem;     /* Espacio inferior */
+    text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.6); /* Sombra clara */
+    letter-spacing: 1px;       /* Espaciado entre letras */
+}
+
+.validar-codigo-texto {
+    margin-bottom: 1.5rem;
+    color: white;
+    font-weight: 500;
+}
+
+.validar-codigo-texto strong {
+    font-weight: 700;
+    color: white;
+}
+
+.codigo-input-group {
+    display: flex;
+    justify-content: center;
     gap: 1rem;
-  }
-  
-  .validar-codigo-input {
-    padding: 0.75rem;
+    margin-bottom: 1.5rem;
+}
+
+.codigo-digit-input {
+    width: 60px;
+    height: 70px;
+    text-align: center;
+    font-size: 2rem;
+    border-radius: 1rem;
+    border: none;
+    background-color: #BFB2B2;
+    color: #2C0844;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+.codigo-digit-input:focus {
+    box-shadow: 0 0 10px #2C0844;
+    background-color: #ffffff;
+}
+
+.validar-codigo-button {
+    margin-top: 1rem;
+    padding: 0.7rem;
+    background-color: #2C0844;
+    color: white;
+    border: none;
+    border-radius: 9999px;
     font-size: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 0.375rem;
-  }
-  
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.validar-codigo-button:hover {
+    background-color: #1d0632;
+    transform: scale(1.03);
+}
+
