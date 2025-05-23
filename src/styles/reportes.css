@@ -1,0 +1,16 @@
+.reportes-container {
+  max-width: 80vw;
+  margin: 0 auto;
+  padding: 24px;
+  background-color: #dcd2e3;
+  height: 90vh;
+  overflow-y: auto;
+}
+
+
+.reportes-title {
+  text-align: center;
+  font-size: 28px;
+  color: #4b0082;
+  margin-bottom: 24px;
+}

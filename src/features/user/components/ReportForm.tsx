@@ -17,7 +17,7 @@ export const ReportForm: React.FC = () => {
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   const handleChange = (
-      e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
     const target = e.target;
     const { name, value, type } = target;
@@ -68,97 +68,98 @@ export const ReportForm: React.FC = () => {
   };
 
   return (
-      <div className="page-background">
-        <div className="report-form-wrapper">
-          <form className="report-form">
-            <div className="top-section">
-              <div className="image-upload">
-                <label htmlFor="image-upload" className="image-placeholder">
-                  {formData.images.length > 0 ? formData.images.length : "+"}
-                </label>
-                <input
-                    id="image-upload"
-                    type="file"
-                    accept="image/*"
-                    multiple
-                    name="images"
-                    onChange={handleChange}
-                    style={{ display: "none" }}
-                />
-                {errors.images && <p className="error">{errors.images}</p>}
+    <div className="report-form-wrapper">
+      <form className="report-form">
 
-                <div className="image-thumbnails">
-                  {formData.images.map((img, idx) => (
-                      <div key={idx} className="thumb-wrapper">
-                        <img
-                            src={URL.createObjectURL(img)}
-                            alt={`preview-${idx}`}
-                            className="thumb"
-                        />
-                        <button
-                            type="button"
-                            className="delete-thumb"
-                            onClick={() => handleImageDelete(idx)}
-                        >
-                          ❌
-                        </button>
-                      </div>
-                  ))}
-                </div>
-              </div>
+        <div className="top-section">
+          {/* Imagen */}
+          <div className="image-upload">
+            <label htmlFor="image-upload" className="image-placeholder">
+              {formData.images.length > 0 ? formData.images.length : "+"}
+            </label>
+            <input
+              id="image-upload"
+              type="file"
+              accept="image/*"
+              multiple
+              name="images"
+              onChange={handleChange}
+              style={{ display: "none" }}
+            />
+            {errors.images && <p className="error">{errors.images}</p>}
 
-              <div className="right-section">
-                <div className="input-group small">
-                  <label>TITULO</label>
-                  <input name="title" value={formData.title} onChange={handleChange} />
-                  {errors.title && <p className="error">{errors.title}</p>}
-                </div>
-
-                <div className="input-group small">
-                  <label>CATEGORIA</label>
-                  <select name="category" value={formData.category} onChange={handleChange}>
-                    <option value="">------</option>
-                    {CATEGORIES.map((cat) => (
-                        <option key={cat} value={cat}>{cat}</option>
-                    ))}
-                  </select>
-                  {errors.category && <p className="error">{errors.category}</p>}
-                </div>
-
-                <div className="input-group checkbox-group">
-                  <label>IMPORTANTE</label>
-                  <input
-                      type="checkbox"
-                      name="isImportant"
-                      checked={formData.isImportant}
-                      onChange={handleChange}
+            <div className="image-thumbnails">
+              {formData.images.map((img, idx) => (
+                <div key={idx} className="thumb-wrapper">
+                  <img
+                    src={URL.createObjectURL(img)}
+                    alt={`preview-${idx}`}
+                    className="thumb"
                   />
+                  <button
+                    type="button"
+                    className="delete-thumb"
+                    onClick={() => handleImageDelete(idx)}
+                  >
+                    ❌
+                  </button>
                 </div>
-              </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Título, Categoría, Importante */}
+          <div className="right-section">
+            <div className="input-group small">
+              <label>TITULO</label>
+              <input name="title" value={formData.title} onChange={handleChange} />
+              {errors.title && <p className="error">{errors.title}</p>}
             </div>
 
-            <div className="input-group">
-              <label>UBICACION</label>
-              <input name="location" value={formData.location} onChange={handleChange} />
-              {errors.location && <p className="error">{errors.location}</p>}
+            <div className="input-group small">
+              <label>CATEGORIA</label>
+              <select name="category" value={formData.category} onChange={handleChange}>
+                <option value="">------</option>
+                {CATEGORIES.map((cat) => (
+                  <option key={cat} value={cat}>{cat}</option>
+                ))}
+              </select>
+              {errors.category && <p className="error">{errors.category}</p>}
             </div>
 
-            <div className="input-group">
-              <label>DESCRIPCION</label>
-              <textarea name="description" value={formData.description} onChange={handleChange} />
-              {errors.description && <p className="error">{errors.description}</p>}
+            <div className="input-group checkbox-group">
+              <label>IMPORTANTE</label>
+              <input
+                type="checkbox"
+                name="isImportant"
+                checked={formData.isImportant}
+                onChange={handleChange}
+              />
             </div>
-
-            <div className="button-group">
-              <button type="button" className="back-button" onClick={handleBack}>
-                ATRAS
-              </button>
-              <button type="button" className="preview-button" onClick={handlePreview}>
-                PREVISUALIZAR REPORTE
-              </button>
-            </div>
-          </form>
+          </div>
         </div>
-      </div>
+
+        <div className="input-group">
+          <label>UBICACION</label>
+          <input name="location" value={formData.location} onChange={handleChange} />
+          {errors.location && <p className="error">{errors.location}</p>}
+        </div>
+
+        <div className="input-group">
+          <label>DESCRIPCION</label>
+          <textarea name="description" value={formData.description} onChange={handleChange} />
+          {errors.description && <p className="error">{errors.description}</p>}
+        </div>
+
+        <div className="button-group">
+          <button type="button" className="back-button" onClick={handleBack}>
+            ATRAS
+          </button>
+          <button type="button" className="preview-button" onClick={handlePreview}>
+            PREVISUALIZAR REPORTE
+          </button>
+        </div>
+      </form>
+    </div>
   );
 };
