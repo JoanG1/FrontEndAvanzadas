@@ -1,19 +1,16 @@
 /* src/features/user/components/RegisterForm.css */
 /* src/styles/RegisterForm.css */
 
-body {
-    margin: 0;
-    padding: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-image: url('public/fondo.jpg'); /* Ajusta la ruta si es necesario */
-    background-size: cover;
-    background-position: center;
-    height: 100vh;
+.register-page {
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 100vh;
+    background-image: url('public/fondo.jpg'); /* Asegúrate que esté en public/ */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
-
 .register-container {
     width: 100%;
     max-width: 420px;

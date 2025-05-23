@@ -1,25 +1,68 @@
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+.activacion-error-wrapper {
+    min-height: 100vh;
+    background-image: url('/public/fondo.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
 .activacion-error-container {
-  background: #fefefe;
-  padding: 2rem;
-  border-radius: 0.5rem;
-  max-width: 400px;
-  margin: 0 auto;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  border-radius: 1rem;
+  padding: 2rem 2.5rem;
+  max-width: 460px;
+  width: 100%;
   text-align: center;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
 }
 
 .activacion-error-title {
-  font-size: 1.5rem;
-  font-weight: bold;
-  margin-bottom: 1rem;
+  font-size: 2.5rem;         /* Aumenta el tamaño */
+  color: #2C0844;            /* Color oscuro */
+  font-weight: 900;          /* Extra negrita */
+  text-align: center;        /* Centrado */
+  margin-bottom: 1.5rem;     /* Espacio inferior */
+  text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.6); /* Sombra clara */
+  letter-spacing: 1px;       /* Espaciado entre letras */
 }
 
 .activacion-error-texto {
-  margin-bottom: 1.5rem;
-  color: #b91c1c; /* rojo fuerte */
+  color: white; /* rojo claro */
+  font-weight: 500;
+  margin-bottom: 1.8rem;
 }
 
 .activacion-error-botones {
   display: flex;
   justify-content: center;
-  gap: 1rem;
+  gap: 1.2rem;
+  flex-wrap: wrap;
+}
+
+.activacion-error-botones button {
+  padding: 0.8rem 1.5rem;
+  background-color: #2C0844;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 9999px;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  transition: all 0.2s ease-in-out;
+}
+
+.activacion-error-botones button:hover {
+  background-color: #1d0632;
+  transform: scale(1.05);
 }

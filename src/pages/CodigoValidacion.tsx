@@ -6,7 +6,7 @@ const CodigoValidacion: React.FC = () => {
 
   return (
     <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4">Verificación de correo</h1>
+
       <CodigoValidacionForm email={email} />
     </div>
   );
