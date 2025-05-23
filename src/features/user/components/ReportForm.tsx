@@ -4,15 +4,29 @@ import "../../../styles/ReportForm.css";
 
 const CATEGORIES = ["Incidente", "Reclamo", "Sugerencia", "Otro"];
 
-export const ReportForm: React.FC = () => {
-  const [formData, setFormData] = useState<ReportFormData>({
-    title: "",
-    category: "",
-    isImportant: false,
-    location: "",
-    description: "",
-    images: [],
-  });
+interface ReportFormProps {
+  initialData?: ReportFormData;
+  onSubmit?: (data: ReportFormData) => void;
+  onBack?: () => void;
+  submitButtonText?: string;
+}
+
+export const ReportForm: React.FC<ReportFormProps> = ({
+  initialData,
+  onSubmit,
+  onBack,
+  submitButtonText = "ENVIAR",
+}) => {
+  const [formData, setFormData] = useState<ReportFormData>(
+    initialData || {
+      title: "",
+      category: "",
+      isImportant: false,
+      location: "",
+      description: "",
+      images: [],
+    }
+  );
 
   const [errors, setErrors] = useState<Record<string, string>>({});
 
@@ -55,16 +69,11 @@ export const ReportForm: React.FC = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handlePreview = () => {
+  const handleSubmit = () => {
     if (validateForm()) {
-      console.log("PREVISUALIZANDO:", formData);
-    } else {
-      console.log("Errores encontrados.");
+      console.log("Formulario válido:", formData);
+      onSubmit?.(formData); // Ejecuta si se pasó como prop
     }
-  };
-
-  const handleBack = () => {
-    window.history.back();
   };
 
   return (
@@ -111,13 +120,13 @@ export const ReportForm: React.FC = () => {
           {/* Título, Categoría, Importante */}
           <div className="right-section">
             <div className="input-group small">
-              <label>TITULO</label>
+              <label>TÍTULO</label>
               <input name="title" value={formData.title} onChange={handleChange} />
               {errors.title && <p className="error">{errors.title}</p>}
             </div>
 
             <div className="input-group small">
-              <label>CATEGORIA</label>
+              <label>CATEGORÍA</label>
               <select name="category" value={formData.category} onChange={handleChange}>
                 <option value="">------</option>
                 {CATEGORIES.map((cat) => (
@@ -140,23 +149,23 @@ export const ReportForm: React.FC = () => {
         </div>
 
         <div className="input-group">
-          <label>UBICACION</label>
+          <label>UBICACIÓN</label>
           <input name="location" value={formData.location} onChange={handleChange} />
           {errors.location && <p className="error">{errors.location}</p>}
         </div>
 
         <div className="input-group">
-          <label>DESCRIPCION</label>
+          <label>DESCRIPCIÓN</label>
           <textarea name="description" value={formData.description} onChange={handleChange} />
           {errors.description && <p className="error">{errors.description}</p>}
         </div>
 
         <div className="button-group">
-          <button type="button" className="back-button" onClick={handleBack}>
-            ATRAS
+          <button type="button" className="back-button" onClick={onBack}>
+            ATRÁS
           </button>
-          <button type="button" className="preview-button" onClick={handlePreview}>
-            PREVISUALIZAR REPORTE
+          <button type="button" className="submit-button" onClick={handleSubmit}>
+            {submitButtonText}
           </button>
         </div>
       </form>

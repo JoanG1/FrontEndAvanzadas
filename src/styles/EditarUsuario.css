@@ -1,0 +1,28 @@
+.editar-usuario-page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  font-family: 'Arial', sans-serif;
+}
+
+.editar-usuario-wrapper {
+  background: rgba(255, 255, 255, 0.6);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+  padding: 2rem;
+  color: white;
+  width: 100%;
+  max-width: 600px;
+  text-align: center;
+}
+
+.editar-usuario-title {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+  color: #2d1a4f;
+  text-shadow: 1px 1px 5px #453661;
+}

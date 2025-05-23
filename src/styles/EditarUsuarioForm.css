@@ -1,0 +1,94 @@
+.form-container {
+  background: rgba(255, 255, 255, 0.658);
+  padding: 2rem;
+  border-radius: 1rem;
+  max-width: 500px;
+  width: 100%;
+  margin: 0 auto;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form-avatar {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+.avatar-img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background-color: #ccc;
+}
+
+.edit-icon {
+  position: absolute;
+  top: 65%;
+  right: 35%;
+  font-size: 1.2rem;
+  background: #fff;
+  color: #333;
+  border-radius: 50%;
+  padding: 4px;
+  transform: translate(50%, -50%);
+}
+
+.form-fields {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.form-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.form-row label {
+  width: 40%;
+  font-weight: bold;
+  text-align: left;
+  color: #2d1a4f;
+  
+}
+
+.form-row input {
+  width: 60%;
+  padding: 0.5rem;
+  border: none;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.2);
+  color: #2d1a4f;
+  font-weight: bold;
+  text-align: center;
+  backdrop-filter: blur(4px);
+  
+}
+
+.form-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.form-buttons button {
+  background: #2e003e;
+  color: white;
+  padding: 0.75rem 2rem;
+  border: none;
+  border-radius: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.form-buttons button:hover {
+  background: #7f00ff;
+}
