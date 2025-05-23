@@ -12,6 +12,7 @@ import ReporteFeed from "./pages/Reportes";
 import MisNotificaciones from "./pages/MisNotificaciones";
 import MisReportesPendientes from "./pages/MisReportesPendientes";
 import MisReportesRechazados from "./pages/MisReportesRechazados";
+import EditReportPage from "./pages/EditReportPage";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
           <Route path="/mis-notificaciones" element={<MisNotificaciones />} /> 
           <Route path="/mis-reportes-pendientes" element={<MisReportesPendientes />} />
           <Route path="/mis-reportes-rechazados" element={<MisReportesRechazados />} />
+          <Route path="/editar-reporte" element={<EditReportPage />} />
         </Routes>
       </div>
 
