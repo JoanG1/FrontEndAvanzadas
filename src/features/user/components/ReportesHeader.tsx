@@ -26,7 +26,7 @@ export const ReportesHeader: FC<Props> = ({ usuario, titulo }) => {
   }, []);
 
   return (
-    <div className="reportes-header">
+    <div className="reportes-header" style={{ width: "100%", maxWidth: "850px" }} >
       <div className="user-info">
         <div className="avatar">👤</div>
         <div className="user-details">

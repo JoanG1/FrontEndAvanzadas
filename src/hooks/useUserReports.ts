@@ -4,9 +4,11 @@ import { Report, UserInfo } from "../types/report.d";
 export const useUserReports = () => {
   const [reportes, setReportes] = useState<Report[]>([]);
   const [usuario, setUsuario] = useState<UserInfo | null>(null);
+  const [moderador, setModerador] = useState<UserInfo | null>(null);
 
   useEffect(() => {
     setUsuario({ nombre: "Tatiana Mosquera", rol: "usuario" });
+    setModerador({ nombre: "Joan Gomez", rol: "administrador"});
     setReportes([
       {
         id: 1,
@@ -35,5 +37,5 @@ export const useUserReports = () => {
     ]);
   }, []);
 
-  return { reportes, usuario };
+  return { reportes, usuario, moderador };
 };

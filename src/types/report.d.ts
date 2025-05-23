@@ -20,3 +20,11 @@ export interface UserInfo {
   nombre: string;
   rol: "usuario" | "administrador";
 }
+
+interface ReportFormProps {
+  initialData?: ReportFormData;
+  onSubmit: (data: ReportFormData) => void;
+  submitButtonText?: string;
+  onBack?: () => void;
+}
+

@@ -14,6 +14,10 @@ import MisReportesPendientes from "./pages/MisReportesPendientes";
 import MisReportesRechazados from "./pages/MisReportesRechazados";
 import EditReportPage from "./pages/EditReportPage";
 import ResendReportPage from "./pages/ResendReportPage";
+import ModeratorDashboardPage from "./pages/ModeratorDashboardPage";
+import ReportesRevision from "./pages/ReportesRevision";
+import ReportePreviewPage from "./pages/ReportPreviewPage";
+import ReportePreviewRevision from "./pages/ReportPreviewRevision";
 
 function App() {
   return (
@@ -35,6 +39,10 @@ function App() {
           <Route path="/mis-reportes-rechazados" element={<MisReportesRechazados />} />
           <Route path="/editar-reporte" element={<EditReportPage />} />
           <Route path="/reenviar-reporte" element={<ResendReportPage />} />
+          <Route path="/moderador-dashboard" element={<ModeratorDashboardPage />} />
+          <Route path="/reportes-revision" element={<ReportesRevision />} />
+          <Route path="/preview-crear-reporte" element={<ReportePreviewPage />} />
+          <Route path="/preview-revisar-reporte" element={<ReportePreviewRevision />} />
         </Routes>
       </div>
 

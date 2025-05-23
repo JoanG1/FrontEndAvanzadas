@@ -1,0 +1,42 @@
+
+.moderador-container {
+  display: flex;
+  flex-direction: column;
+  background: rgba(240, 240, 240, 0.95);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  max-width: 900px;
+  width: 100%;
+  height: auto;
+  margin: 0 auto; /* Horizontal */
+  align-items: center; /* 🟢 centra horizontalmente */
+  min-height:90vh ;/* ocupa toda la altura de la pantalla */
+}
+
+.acciones-moderador {
+  margin-top: 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 400px;
+  align-items: center;
+}
+
+.acciones-moderador button {
+  width: 100%;
+  padding: 1rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: white;
+  background-color: #3a0057;
+  border: none;
+  border-radius: 1.5rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.acciones-moderador button:hover {
+  background-color: #5b0c88;
+}
