@@ -18,6 +18,7 @@ import ModeratorDashboardPage from "./pages/ModeratorDashboardPage";
 import ReportesRevision from "./pages/ReportesRevision";
 import ReportePreviewPage from "./pages/ReportPreviewPage";
 import ReportePreviewRevision from "./pages/ReportPreviewRevision";
+import UserInfoPage from "./pages/UserInfoPage";
 
 function App() {
   return (
@@ -43,6 +44,7 @@ function App() {
           <Route path="/reportes-revision" element={<ReportesRevision />} />
           <Route path="/preview-crear-reporte" element={<ReportePreviewPage />} />
           <Route path="/preview-revisar-reporte" element={<ReportePreviewRevision />} />
+          <Route path="/user-info" element={<UserInfoPage />} />
         </Routes>
       </div>
 
