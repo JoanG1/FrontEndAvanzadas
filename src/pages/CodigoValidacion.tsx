@@ -1,13 +1,19 @@
 import React from 'react';
+import { useLocation, Navigate } from 'react-router-dom';
 import { CodigoValidacionForm } from '../features/user/components/CodigoValidacionForm';
 
 const CodigoValidacion: React.FC = () => {
-  const email = "usuario@example.com"; // Idealmente viene del estado global o props
+  const location = useLocation();
+  const email = location.state?.email;
+  const userId = location.state?.userId;
+
+  if (!email || !userId) {
+    return <Navigate to="/register" />;
+  }
 
   return (
     <div className="p-4">
-
-      <CodigoValidacionForm email={email} />
+      <CodigoValidacionForm email={email} userId={userId} />
     </div>
   );
 };

@@ -20,6 +20,8 @@ import ReportePreviewPage from "./pages/ReportPreviewPage";
 import ReportePreviewRevision from "./pages/ReportPreviewRevision";
 import UserInfoPage from "./pages/UserInfoPage";
 import EditarUsuario from "./pages/EditarUsuario";
+import GenerarReportePage from "./pages/GenerarReportePage";
+import CrearCategoriaPage from "./pages/CrearCategoriaPage";
 
 function App() {
   return (
@@ -47,6 +49,8 @@ function App() {
           <Route path="/preview-revisar-reporte" element={<ReportePreviewRevision />} />
           <Route path="/user-info" element={<UserInfoPage />} />
           <Route path="/editar-usuario" element={<EditarUsuario />} />
+          <Route path="/generar-reporte" element={<GenerarReportePage />} />
+          <Route path="/Crear-categoria" element={<CrearCategoriaPage />} />
         </Routes>
       </div>
 

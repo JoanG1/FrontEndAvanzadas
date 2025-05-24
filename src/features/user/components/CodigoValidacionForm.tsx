@@ -1,25 +1,22 @@
 import { FC } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "../../../components/ui/Button";
 import type { CodigoValidacionFormProps } from "../../../types/user";
 import "../../../styles/CodigoValidacionForm.css";
 
-const ocultarEmail = (email: string): string => {
-  const [local, domain] = email.split("@");
-  const ocultoLocal = local.length > 2 ? local[0] + "****" + local.slice(-1) : "****";
-  const ocultoDomain = domain.length > 3 ? domain[0] + "****" + domain.slice(-1) : "****";
-  return `${ocultoLocal}@${ocultoDomain}`;
-};
 
-export const CodigoValidacionForm: FC<CodigoValidacionFormProps> = ({ email }) => {
+export const CodigoValidacionForm: FC<CodigoValidacionFormProps> = ({ email, userId }) => {
+  const navigate = useNavigate();
+
   const handleEnviarCodigo = () => {
     const codigoSimulado = "1234"; // CODIGO QUEMADO
-    console.log(JSON.stringify({ mensaje: "Código enviado", codigo: codigoSimulado }));
-    //AQUI IRIA LA LOGICA QUE USA EL SERVICIO "/CODIGO-VALIDACION"
+    console.log(JSON.stringify({ mensaje: "Código enviado", codigo: codigoSimulado, email, userId }));
+    // Aquí iría la lógica que llama al servicio real /api/auth/codigo-validacion
   };
 
   const handleEditarCorreo = () => {
     console.log("Volver a editar correo");
-    // AQUI PODRIA IR LA NAVEGACION AL REGISTRO PARA EDITAR EL CORREO
+    navigate("/register", { state: { email } }); // opcional: pasar el email para precargar
   };
 
   return (
@@ -28,7 +25,7 @@ export const CodigoValidacionForm: FC<CodigoValidacionFormProps> = ({ email }) =
 
       <p className="codigo-validacion-texto">
         A continuación se enviará un código de activación al correo
-        proporcionado <strong>{ocultarEmail(email)}</strong>. Haz clic en <strong>Enviar código</strong> para continuar. 
+        proporcionado <strong>{email}</strong>. Haz clic en <strong>Enviar código</strong> para continuar. 
         Para editar el correo, vuelve atrás.
       </p>
 

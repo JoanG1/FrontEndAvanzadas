@@ -10,7 +10,7 @@ export function isValidCodigo(codigo: string): boolean {
 
 // Valida que una contraseña tenga al menos 8 caracteres, una mayúscula, una minúscula y un número
 export function isStrongPassword(password: string): boolean {
-  return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$/.test(password);
+  return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*?&#]{8,}$/.test(password);
 }
 
 // Valida que un campo no esté vacío (sin espacios en blanco)

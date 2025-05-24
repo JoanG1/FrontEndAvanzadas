@@ -9,7 +9,7 @@ export interface User {
 //TIPADO DE FORMULARIO DE REGISTRO
 export interface FormDataRegister {
 	nombre: string;
-	correo: string;
+	email: string;
 	telefono: string;
 	ciudad: string;
 	direccion: string;
@@ -19,15 +19,17 @@ export interface FormDataRegister {
 
 //TIPADO DE FORMULARIO DE INICIO DE SESIÓN
 export interface FormDataLogin {
-	correo: string;
+	email: string;
 	contrasena: string;
   }
 
 
 //TIPADO DE FORMULARIO CODIGO DE VALIDACIÓN
 export interface CodigoValidacionFormProps {
-	email: string;
-  }
+  email: string;
+  userId: string;
+}
+
   
 
 //TIPADO DE FORMULARIO VALIDACION DEL CODIGO
