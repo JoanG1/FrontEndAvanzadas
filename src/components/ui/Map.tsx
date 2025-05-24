@@ -1,27 +1,35 @@
-// src/components/ui/Map.tsx
 import React, { useRef, useEffect, useState } from 'react';
 import mapboxgl from 'mapbox-gl';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 import '../../styles/Map.css';
+import { useNavigate } from "react-router-dom";
+
 
 mapboxgl.accessToken = 'pk.eyJ1Ijoiam9hbmdvbWV6MSIsImEiOiJjbWE0bjJiaG4wOXFsMmlxNXBwNWc0ZTN3In0.Tg7Z_jnFxx3eqR31R1g8UA';
 
 const Map: React.FC = () => {
+  const navigate = useNavigate();
   const mapContainer = useRef<HTMLDivElement>(null);
   const mapRef = useRef<mapboxgl.Map | null>(null);
   const markerRef = useRef<mapboxgl.Marker | null>(null);
-  const [coordenadas, setCoordenadas] = useState<{ latitud: string; longitud: string }>({
+  const geocoderRef = useRef<MapboxGeocoder | null>(null);
+  const [coordenadas, setCoordenadas] = useState<{
+    latitud: string;
+    longitud: string;
+    direccion?: string;
+  }>({
     latitud: '',
     longitud: '',
+    direccion: '',
   });
+
 
   useEffect(() => {
     if (!mapContainer.current) return;
 
-    // Inicializar el mapa
-    mapRef.current = new mapboxgl.Map({
+    const map = new mapboxgl.Map({
       container: mapContainer.current,
       style: 'mapbox://styles/mapbox/dark-v11',
       center: [-74.5, 40],
@@ -31,21 +39,18 @@ const Map: React.FC = () => {
       antialias: true,
     });
 
-    // Agregar controles de navegación
-    mapRef.current.addControl(new mapboxgl.NavigationControl());
+    mapRef.current = map;
 
-    // Agregar control de geolocalización
-    mapRef.current.addControl(
+    map.addControl(new mapboxgl.NavigationControl());
+
+    map.addControl(
       new mapboxgl.GeolocateControl({
-        positionOptions: {
-          enableHighAccuracy: true,
-        },
+        positionOptions: { enableHighAccuracy: true },
         trackUserLocation: true,
         showUserHeading: true,
       })
     );
 
-    // Agregar control de geocodificación (buscador)
     const geocoder = new MapboxGeocoder({
       accessToken: mapboxgl.accessToken!,
       mapboxgl: mapboxgl as any,
@@ -53,28 +58,26 @@ const Map: React.FC = () => {
       placeholder: 'Buscar ubicación',
     });
 
-    mapRef.current.addControl(geocoder, 'top-left');
+    geocoderRef.current = geocoder;
+    map.addControl(geocoder, 'top-left');
 
-    // Manejar resultados del geocoder
     geocoder.on('result', (e) => {
       const { center } = e.result;
       if (center && mapRef.current) {
-        mapRef.current.flyTo({ center, zoom: 14 });
+        map.flyTo({ center, zoom: 14 });
         agregarMarcador(center);
       }
     });
 
-    // Manejar clics en el mapa para agregar marcadores
-    mapRef.current.on('click', (e) => {
+    map.on('click', (e) => {
       const { lng, lat } = e.lngLat;
       agregarMarcador([lng, lat]);
+      reverseGeocodeAndUpdateGeocoder(lng, lat);
     });
 
-    // Agregar capa de edificios 3D al cargar el mapa
-    mapRef.current.on('load', () => {
-      mapRef.current?.resize();
-
-      mapRef.current?.addLayer({
+    map.on('load', () => {
+      map.resize();
+      map.addLayer({
         id: '3d-buildings',
         source: 'composite',
         'source-layer': 'building',
@@ -91,14 +94,11 @@ const Map: React.FC = () => {
     });
 
     return () => {
-      mapRef.current?.remove();
+      map.remove();
     };
   }, []);
 
-  // Función para agregar o mover el marcador
-  const agregarMarcador = (coords: [number, number]) => {
-    const [lng, lat] = coords;
-
+  const agregarMarcador = ([lng, lat]: [number, number]) => {
     if (markerRef.current) {
       markerRef.current.setLngLat([lng, lat]);
     } else if (mapRef.current) {
@@ -113,15 +113,49 @@ const Map: React.FC = () => {
     });
   };
 
-  // Función para manejar el clic en "Crear Reporte"
+  const reverseGeocodeAndUpdateGeocoder = async (lng: number, lat: number) => {
+    const endpoint = `https://api.mapbox.com/geocoding/v5/mapbox.places/${lng},${lat}.json?access_token=${mapboxgl.accessToken}`;
+    try {
+      const response = await fetch(endpoint);
+      const data = await response.json();
+      if (data.features && data.features.length > 0) {
+        const placeName = data.features[0].place_name;
+        geocoderRef.current?.setInput(placeName);
+        console.log(placeName)
+        setCoordenadas((prev) => ({
+          ...prev,
+          direccion: placeName,
+        }));
+      }
+    } catch (error) {
+      console.error('Error en la geocodificación inversa', error);
+    }
+  };
+
   const manejarCrearReporte = () => {
-    if (coordenadas.latitud && coordenadas.longitud) {
-      console.log('Coordenadas seleccionadas:', coordenadas);
-      alert(`Coordenadas seleccionadas:\nLatitud: ${coordenadas.latitud}\nLongitud: ${coordenadas.longitud}`);
+    const { latitud, longitud, direccion } = coordenadas;
+
+    if (latitud && longitud) {
+      const reporte = {
+        latitud,
+        longitud,
+        direccion: direccion || "Desconocida"
+      };
+
+      console.log('📍 Reporte generado:', reporte);
+
+      navigate("/nuevo-reporte", {
+        state: {
+          location: reporte.direccion,
+          latitud: reporte.latitud,
+          longitud: reporte.longitud
+        }
+      });
     } else {
       alert('Por favor, selecciona una ubicación en el mapa.');
     }
   };
+
 
   return (
     <div className="map-wrapper">

@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ReportFormData } from "../../../types/report";
 import "../../../styles/ReportForm.css";
+
 
 const CATEGORIES = ["Incidente", "Reclamo", "Sugerencia", "Otro"];
 
@@ -75,6 +76,15 @@ export const ReportForm: React.FC<ReportFormProps> = ({
       onSubmit?.(formData); // Ejecuta si se pasó como prop
     }
   };
+
+  useEffect(() => {
+    if (initialData) {
+      setFormData(prev => ({
+        ...prev,
+        location: initialData.location || prev.location,
+      }));
+    }
+  }, [initialData]);
 
   return (
     <div className="report-form-wrapper">

@@ -1,27 +1,62 @@
-// src/features/user/components/EditarUsuarioForm.tsx
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../../styles/EditarUsuarioForm.css";
+import useAuth from "../../../hooks/useAuth";
+import { getUsuarioPorEmail, actualizarUsuario } from "../../user/userServices/api";
 
 export const EditarUsuarioForm: FC = () => {
   const navigate = useNavigate();
+  const { email } = useAuth();
 
   const [formData, setFormData] = useState({
-    email: "TATIANA@GMAIL.COM",
-    nombre: "Tatiana Mosquera",
-    residencia: "Centro de la ciudad",
-    ciudad: "Armenia Quindio",
-    nivel: "Usuario"
+    nombre: "",
+    telefono: "",
+    direccion: "",
+    ciudad: ""
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  useEffect(() => {
+    const fetchData = async () => {
+      if (email) {
+        try {
+          const response = await getUsuarioPorEmail(email);
+          if (!response.error) {
+            const { nombre, telefono, direccion, ciudad } = response.mensaje;
+            setFormData({
+              nombre,
+              telefono,
+              direccion,
+              ciudad: ciudad || ""
+            });
+          }
+        } catch (err) {
+          console.error("Error al cargar usuario:", err);
+        }
+      }
+    };
+
+    fetchData();
+  }, [email]);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = () => {
-    console.log("Datos enviados:", formData);
-    alert("Simulación de envío exitosa ✅");
+  const handleSubmit = async () => {
+    try {
+      if (email) {
+        const response = await actualizarUsuario(email, formData);
+        if (!response.error) {
+          navigate("/user-info");
+        } else {
+          alert("Error al actualizar: " + response.mensaje);
+        }
+      }
+    } catch (err) {
+      console.error("Error al actualizar usuario:", err);
+      alert("Hubo un error al enviar los datos ❌");
+    }
   };
 
   return (
@@ -34,7 +69,7 @@ export const EditarUsuarioForm: FC = () => {
       <div className="form-fields">
         <div className="form-row">
           <label>CORREO</label>
-          <input name="email" value={formData.email} disabled />
+          <input name="email" value={email || ""} disabled />
         </div>
 
         <div className="form-row">
@@ -43,23 +78,31 @@ export const EditarUsuarioForm: FC = () => {
         </div>
 
         <div className="form-row">
-          <label>RESIDENCIA</label>
-          <input name="residencia" value={formData.residencia} onChange={handleChange} />
+          <label>TELÉFONO</label>
+          <input name="telefono" value={formData.telefono} onChange={handleChange} />
+        </div>
+
+        <div className="form-row">
+          <label>DIRECCIÓN</label>
+          <input name="direccion" value={formData.direccion} onChange={handleChange} />
         </div>
 
         <div className="form-row">
           <label>CIUDAD</label>
-          <input name="ciudad" value={formData.ciudad} onChange={handleChange} />
-        </div>
-
-        <div className="form-row">
-          <label>NIVEL</label>
-          <input name="nivel" value={formData.nivel} onChange={handleChange} />
+          <select name="ciudad" value={formData.ciudad} onChange={handleChange}>
+            <option value="">Seleccione una ciudad</option>
+            <option value="MEDELLIN">MEDELLIN</option>
+            <option value="PEREIRA">PEREIRA</option>
+            <option value="BOGOTA">BOGOTA</option>
+            <option value="ARMENIA">ARMENIA</option>
+            <option value="MANIZALES">MANIZALES</option>
+            <option value="CALI">CALI</option>
+          </select>
         </div>
       </div>
 
       <div className="form-buttons">
-        <button onClick={() => navigate(-1)}>ATRÁS</button>
+        <button onClick={() => navigate("/user-info")}>ATRÁS</button>
         <button onClick={handleSubmit}>TERMINAR</button>
       </div>
     </div>

@@ -28,3 +28,14 @@ export const getUsuarioPorEmail = async (email: string) => {
   const response = await apiClient.get(`/api/usuarios/${email}`);
   return response.data;
 };
+
+export const actualizarUsuario = async (email: string, data: {
+  nombre: string;
+  telefono: string;
+  direccion: string;
+  ciudad: string;
+}) => {
+  const response = await apiClient.put(`/api/usuarios/${email}`, data);
+  return response.data;
+};
+
