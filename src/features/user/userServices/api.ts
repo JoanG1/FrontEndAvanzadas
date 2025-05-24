@@ -23,3 +23,8 @@ export const validarCodigoActivacion = async (email: string, codigoActivacion: s
   });
   return response.data;
 };
+
+export const getUsuarioPorEmail = async (email: string) => {
+  const response = await apiClient.get(`/api/usuarios/${email}`);
+  return response.data;
+};

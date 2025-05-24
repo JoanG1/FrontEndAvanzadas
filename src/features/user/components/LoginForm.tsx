@@ -74,7 +74,7 @@ const LoginForm: React.FC = () => {
 
         <div className="login-footer">
           <p>¿No tienes cuenta? <a href="/register">Regístrate</a></p>
-          <p><a href="/forgot-password">¿Olvidaste tu contraseña?</a></p>
+          <p><a href="/recuperar-cuenta">¿Olvidaste tu contraseña?</a></p>
         </div>
       </div>
     </div>

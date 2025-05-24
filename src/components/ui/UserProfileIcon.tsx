@@ -1,10 +1,19 @@
 import { FC, useState, useRef } from "react";
-import { FaUser, FaRegCommentDots, FaMapMarkerAlt, FaTimes, FaFileAlt, FaClipboard } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+import {
+  FaUser,
+  FaRegCommentDots,
+  FaMapMarkerAlt,
+  FaTimes,
+  FaFileAlt,
+  FaClipboard
+} from "react-icons/fa";
 import "../../styles/UserProfileIcon.css";
 
 export const UserProfileIcon: FC = () => {
   const [open, setOpen] = useState(false);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const navigate = useNavigate();
 
   const handleMouseEnter = () => {
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
@@ -14,7 +23,7 @@ export const UserProfileIcon: FC = () => {
   const handleMouseLeave = () => {
     timeoutRef.current = setTimeout(() => {
       setOpen(false);
-    }, 300); // Delay para permitir moverse al panel
+    }, 300);
   };
 
   return (
@@ -25,7 +34,7 @@ export const UserProfileIcon: FC = () => {
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
-        <div className="user-icon-circle">
+        <div className="user-icon-circle" onClick={() => navigate("/user-info")}>
           <FaUser className="user-icon" />
           <div className="notification-badge">1</div>
         </div>
@@ -36,15 +45,17 @@ export const UserProfileIcon: FC = () => {
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
-        <div className="nav-icon"><FaUser /></div>
-        <div className="nav-icon"><FaClipboard /></div>
-        <div className="nav-icon"><FaFileAlt /></div>
-        <div className="nav-icon badge">
+        <div className="nav-icon" onClick={() => navigate("/user-info")}><FaUser /></div>
+        <div className="nav-icon" onClick={() => navigate("/mis-reportes")}><FaClipboard /></div>
+        <div className="nav-icon" onClick={() => navigate("/mis-reportes-pendientes")}><FaFileAlt /></div>
+        <div className="nav-icon badge" onClick={() => navigate("/mis-notificaciones")}>
           <FaRegCommentDots />
           <span className="notif-dot">1</span>
         </div>
-        <div className="nav-icon"><FaTimes /></div>
-        <div className="nav-icon"><FaMapMarkerAlt /></div>
+        <div className="nav-icon" onClick={() => navigate("/mis-reportes-rechazados")}><FaTimes /></div>
+        <div className="nav-icon" onClick={() => navigate("/")}>
+          <FaMapMarkerAlt />
+        </div>
       </div>
     </div>
   );

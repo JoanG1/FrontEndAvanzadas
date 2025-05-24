@@ -2,10 +2,12 @@ import { FC, useState } from "react";
 import { Button } from "../../../components/ui/Button";
 import type { RecuperarCuentaFormProps } from "../../../types/user";
 import "../../../styles/RecuperarCuentaForm.css";
+import { useNavigate } from "react-router-dom";
 
 export const RecuperarCuentaForm: FC<RecuperarCuentaFormProps> = () => {
     const [email, setEmail] = useState("");
     const [mensaje, setMensaje] = useState("");
+    const navigate = useNavigate();
 
     const isValidEmail = (email: string) =>
         /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -16,22 +18,12 @@ export const RecuperarCuentaForm: FC<RecuperarCuentaFormProps> = () => {
 
     const handleSubmit = async () => {
         if (!isValidEmail(email)) {
-            alert("Por favor, ingresa un correo electrónico válido.");
             return;
         }
 
         try {
             console.log(JSON.stringify({ mensaje: "Solicitud enviada", correo: email }));
-
-            // Simulación de llamada al backend:
-            /*
-            await fetch("/recuperar-cuenta", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ email }),
-            });
-            */
-
+            navigate("/cambiar-contrasena")
             setMensaje("Se ha enviado un correo con instrucciones para recuperar tu cuenta.");
         } catch (error) {
             console.error("Error en la solicitud:", error);
