@@ -1,5 +1,6 @@
 import { apiClient } from '../../../services/apiClient';
 import { FormDataLogin,FormDataRegister  } from '../../../types/user';
+import axios from 'axios';
 
 export const loginUser = async (data: FormDataLogin) => {
   const response = await apiClient.post('/api/auth/login', data);
@@ -60,5 +61,26 @@ export const crearReporte = async (email: string ,data: {
   const response = await apiClient.post(`/api/reportes/${email}`, data);
   return response.data;
 };
+
+export const uploadImage = async (reportId: string, file: File): Promise<string> => {
+  const token = localStorage.getItem('jwt_token');
+  const formData = new FormData();
+  formData.append('file', file);
+
+  const response = await axios.post(
+    `http://localhost:8080/api/images/upload?id=${reportId}`,
+    formData,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        // NO pongas Content-Type aquí; el navegador lo gestiona automáticamente
+      },
+    }
+  );
+
+  return response.data; // Asegúrate que tu backend devuelve { url: "..." }
+};
+
+
 
 

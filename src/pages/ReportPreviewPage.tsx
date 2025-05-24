@@ -3,16 +3,16 @@ import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ReportPreviewCard } from "../features/user/components/ReportPreviewCard";
 import { UserProfileIcon } from "../components/ui/UserProfileIcon";
-import { ReportFormData } from "../types/report";
-import { crearReporte } from '../features/user/userServices/api';
+import { crearReporte, uploadImage } from '../features/user/userServices/api';
 import useAuth from "../hooks/useAuth"
 
 
 const ReportPreviewPage: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const reportData = location.state as ReportFormData;
+  const reportData = location.state;
   const {email} = useAuth();
+
 
   const handleCreate = async () => {
     try {
@@ -31,10 +31,19 @@ const ReportPreviewPage: React.FC = () => {
       };
       console.log(nuevoReporte);
       if(email){
-        await crearReporte(email,nuevoReporte);
+
+        console.log(reportData.images);
+        const response = await crearReporte(email,nuevoReporte);
+
+        // Subir cada imagen
+      for (const imageFile of reportData.images) {
+      
+        console.log("image "+ imageFile + " id "+response.mensaje)
+        await uploadImage(response.mensaje, imageFile);
+      }
         navigate('/reportes-feed'); // Redirige a la lista de reportes o a donde desees
       }else{
-        alert("el email esta vacio");
+        alert("algo salio mal");
       }
       
     } catch (error) {
