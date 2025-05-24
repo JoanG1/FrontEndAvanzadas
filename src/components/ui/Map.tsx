@@ -16,12 +16,12 @@ const Map: React.FC = () => {
   const markerRef = useRef<mapboxgl.Marker | null>(null);
   const geocoderRef = useRef<MapboxGeocoder | null>(null);
   const [coordenadas, setCoordenadas] = useState<{
-    latitud: string;
-    longitud: string;
+    latitud: number;
+    longitud: number;
     direccion?: string;
   }>({
-    latitud: '',
-    longitud: '',
+    latitud: 0,
+    longitud: 0,
     direccion: '',
   });
 
@@ -108,8 +108,8 @@ const Map: React.FC = () => {
     }
 
     setCoordenadas({
-      latitud: lat.toFixed(6),
-      longitud: lng.toFixed(6),
+      latitud: lat,
+      longitud: lng,
     });
   };
 

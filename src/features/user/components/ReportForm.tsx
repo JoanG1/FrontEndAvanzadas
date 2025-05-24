@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { ReportFormData } from "../../../types/report";
 import "../../../styles/ReportForm.css";
+import { getCategorias } from "../../../features/user/userServices/api";
 
-
-const CATEGORIES = ["Incidente", "Reclamo", "Sugerencia", "Otro"];
+interface Categoria {
+  id: string | null;
+  nombre: string;
+  descripcion: string;
+}
 
 interface ReportFormProps {
   initialData?: ReportFormData;
@@ -13,11 +18,10 @@ interface ReportFormProps {
 }
 
 export const ReportForm: React.FC<ReportFormProps> = ({
-  initialData,
-  onSubmit,
-  onBack,
-  submitButtonText = "ENVIAR",
+  initialData
 }) => {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState<ReportFormData>(
     initialData || {
       title: "",
@@ -26,10 +30,29 @@ export const ReportForm: React.FC<ReportFormProps> = ({
       location: "",
       description: "",
       images: [],
+      latitud: 0,
+      longitud: 0
     }
   );
 
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [categorias, setCategorias] = useState<Categoria[]>([]);
+  const [loadingCategorias, setLoadingCategorias] = useState<boolean>(true);
+
+  useEffect(() => {
+    const fetchCategorias = async () => {
+      try {
+        const data = await getCategorias();
+        setCategorias(data);
+      } catch (error) {
+        console.error("Error al obtener las categorías:", error);
+      } finally {
+        setLoadingCategorias(false);
+      }
+    };
+
+    fetchCategorias();
+  }, []);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -73,15 +96,17 @@ export const ReportForm: React.FC<ReportFormProps> = ({
   const handleSubmit = () => {
     if (validateForm()) {
       console.log("Formulario válido:", formData);
-      onSubmit?.(formData); // Ejecuta si se pasó como prop
+      navigate("/preview-crear-reporte", { state: formData });
     }
   };
 
   useEffect(() => {
     if (initialData) {
-      setFormData(prev => ({
+      setFormData((prev) => ({
         ...prev,
         location: initialData.location || prev.location,
+        latitud: Number(initialData.latitud),
+        longitud: Number(initialData.longitud)
       }));
     }
   }, [initialData]);
@@ -89,7 +114,6 @@ export const ReportForm: React.FC<ReportFormProps> = ({
   return (
     <div className="report-form-wrapper">
       <form className="report-form">
-
         <div className="top-section">
           {/* Imagen */}
           <div className="image-upload">
@@ -139,9 +163,15 @@ export const ReportForm: React.FC<ReportFormProps> = ({
               <label>CATEGORÍA</label>
               <select name="category" value={formData.category} onChange={handleChange}>
                 <option value="">------</option>
-                {CATEGORIES.map((cat) => (
-                  <option key={cat} value={cat}>{cat}</option>
-                ))}
+                {loadingCategorias ? (
+                  <option disabled>Cargando...</option>
+                ) : (
+                  categorias.map((cat) => (
+                    <option key={cat.nombre} value={cat.nombre}>
+                      {cat.nombre}
+                    </option>
+                  ))
+                )}
               </select>
               {errors.category && <p className="error">{errors.category}</p>}
             </div>
@@ -171,11 +201,11 @@ export const ReportForm: React.FC<ReportFormProps> = ({
         </div>
 
         <div className="button-group">
-          <button type="button" className="back-button" onClick={onBack}>
+          <button type="button" className="back-button" onClick={() => navigate("/")}>
             ATRÁS
           </button>
           <button type="button" className="submit-button" onClick={handleSubmit}>
-            {submitButtonText}
+            ENVIAR
           </button>
         </div>
       </form>

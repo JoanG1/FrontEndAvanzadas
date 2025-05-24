@@ -39,3 +39,26 @@ export const actualizarUsuario = async (email: string, data: {
   return response.data;
 };
 
+export const getCategorias = async () => {
+  const response = await apiClient.get('/api/admin/categorias');
+  return response.data;
+};
+
+export const crearReporte = async (email: string ,data: {
+  titulo: string;
+  descripcion: string;
+  ubicacion: {
+    latitud: number;
+    longitud: number;
+    direccion: string;
+  };
+  estadoReporte: string;
+  imagenes: string[];
+  categoria: string;
+  fechaCreacion: string;
+}) => {
+  const response = await apiClient.post(`/api/reportes/${email}`, data);
+  return response.data;
+};
+
+

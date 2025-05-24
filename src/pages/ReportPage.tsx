@@ -9,6 +9,8 @@ const ReportPage: React.FC = () => {
 
   const { latitud, longitud, location: direccion } = state;
 
+  console.log(latitud+" "+longitud);
+
   const initialData = {
     title: "",
     category: "",
@@ -16,8 +18,8 @@ const ReportPage: React.FC = () => {
     location: direccion || "",
     description: "",
     images: [],
-    latitud,
-    longitud
+    latitud: Number(latitud),
+    longitud: Number(longitud)
   };
 
   return (

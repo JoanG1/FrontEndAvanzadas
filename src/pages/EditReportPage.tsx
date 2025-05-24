@@ -14,7 +14,9 @@ const EditReportPage: React.FC = () => {
     isImportant: true,
     location: "Calle 123 #45-67",
     description: "Ocurrió un robo a las 9pm.",
-    images: [], // si tienes URLs de imágenes previas puedes adaptarlo
+    images: [],
+    latitud:0,
+    longitud: 0 // si tienes URLs de imágenes previas puedes adaptarlo
   };
 
   const actualizarReporte = (data: ReportFormData) => {

@@ -13,7 +13,6 @@ const mockUsuario: UserInfo = {
 const GenerarReportePage: FC = () => {
   return (
     <div className="generar-reporte-page">
-      
       <div className="generar-reporte-container">
         <UserProfileIcon />
         <ReportesHeader usuario={mockUsuario} titulo="Generación de Reportes" />

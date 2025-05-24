@@ -1,25 +1,64 @@
+// src/pages/ReportPreviewPage.tsx
 import React from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { ReportPreviewCard } from "../features/user/components/ReportPreviewCard";
 import { UserProfileIcon } from "../components/ui/UserProfileIcon";
+import { ReportFormData } from "../types/report";
+import { crearReporte } from '../features/user/userServices/api';
+import useAuth from "../hooks/useAuth"
+
 
 const ReportPreviewPage: React.FC = () => {
-  const handleCreate = () => {
-    console.log("Crear reporte...");
-    // lógica para crear reporte
+  const location = useLocation();
+  const navigate = useNavigate();
+  const reportData = location.state as ReportFormData;
+  const {email} = useAuth();
+
+  const handleCreate = async () => {
+    try {
+      const nuevoReporte = {
+        titulo: reportData.title,
+        descripcion: reportData.description,
+        ubicacion: {
+          latitud: reportData.latitud,
+          longitud: reportData.longitud,
+          direccion: reportData.location
+        },
+        estadoReporte: "PENDIENTE",
+        imagenes: [""],
+        categoria: reportData.category,
+        fechaCreacion: ""
+      };
+      console.log(nuevoReporte);
+      if(email){
+        await crearReporte(email,nuevoReporte);
+        navigate('/reportes-feed'); // Redirige a la lista de reportes o a donde desees
+      }else{
+        alert("el email esta vacio");
+      }
+      
+    } catch (error) {
+      console.error('Error al crear el reporte:', error);
+      // Manejo de errores según sea necesario
+    }
   };
+
+  if (!reportData) {
+    return <div>No se proporcionaron datos para vista previa</div>;
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-900 to-indigo-900 flex items-center justify-center text-white px-4">
       <UserProfileIcon />
       <ReportPreviewCard
-        title="Grietas en Avenida Centenario"
-        imageSrc="/placeholder-image.svg"
-        category="Infraestructura"
-        description="Presencia de ciertas grietas por la avenida centenario al lado del edificio Horeb y también se presentan cerca de la rotonda del Calima con salida hacia las clínicas. Tener cuidado pues podrían causar un accidente."
-        location="Calle 24 N # 5 -07"
+        title={reportData.title}
+        imageSrc={reportData.images.length > 0 ? URL.createObjectURL(reportData.images[0]) : "/placeholder-image.svg"}
+        category={reportData.category}
+        description={reportData.description}
+        location={reportData.location}
         primaryLabel="CREAR"
         onPrimaryAction={handleCreate}
-        showArrows={true}
+        showArrows={reportData.images.length > 1}
       />
     </div>
   );

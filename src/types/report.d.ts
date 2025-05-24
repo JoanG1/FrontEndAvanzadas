@@ -5,6 +5,8 @@ export interface ReportFormData {
   location: string;
   description: string;
   images: File[];
+  longitud: number,
+  latitud: number
 }
 
 export interface Report {

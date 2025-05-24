@@ -1,6 +1,7 @@
 import React from "react";
 import "../../../styles/ReportPreviewCard.css";
 import { ReportPreviewCardProps } from "../../../types/reportPreview";
+import { useNavigate } from "react-router-dom";
 
 export const ReportPreviewCard: React.FC<ReportPreviewCardProps> = ({
   title,
@@ -15,10 +16,15 @@ export const ReportPreviewCard: React.FC<ReportPreviewCardProps> = ({
   showSecondaryAction = false,
   showArrows = false
 }) => {
+
+  const navigate = useNavigate();
+
+
+
   return (
     <div className="report-card-container">
       <div className="report-card-header">
-        <button className="report-card-button">ATRAS</button>
+        <button className="report-card-button" onClick={() => navigate(-1)}>ATRAS</button>
         <h2 className="report-card-title">{title}</h2>
         <button onClick={onPrimaryAction} className="report-card-button">
           {primaryLabel}

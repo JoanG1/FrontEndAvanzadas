@@ -15,6 +15,8 @@ const ResendReportPage: React.FC = () => {
     location: "Calle 10 con Av. Siempre Viva",
     description: "Hubo una caída de energía a las 7pm.",
     images: [],
+    latitud:0,
+    longitud:0
   };
 
   const mensajeModerador =
