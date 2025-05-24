@@ -3,16 +3,43 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "../../../components/ui/Button";
 import type { CodigoValidacionFormProps } from "../../../types/user";
 import "../../../styles/CodigoValidacionForm.css";
+import { generarCodigoValidacion } from '../../user/userServices/api';
+
 
 
 export const CodigoValidacionForm: FC<CodigoValidacionFormProps> = ({ email, userId }) => {
   const navigate = useNavigate();
 
-  const handleEnviarCodigo = () => {
-    const codigoSimulado = "1234"; // CODIGO QUEMADO
-    console.log(JSON.stringify({ mensaje: "Código enviado", codigo: codigoSimulado, email, userId }));
-    // Aquí iría la lógica que llama al servicio real /api/auth/codigo-validacion
-  };
+  const handleEnviarCodigo = async () => {
+
+    console.log(userId)
+  try {
+    const response = await generarCodigoValidacion(userId);
+    if (!response.error) {
+      const codigo = response.mensaje;
+      console.log(JSON.stringify({
+        mensaje: "Código enviado",
+        codigo,
+        email,
+        userId
+      }));
+
+      // Redirigir a /validar-codigo con email y userId
+      navigate("/validar-codigo", {
+        state: {
+          email,
+          userId,
+          codigoGenerado: codigo
+        }
+      });
+    } else {
+      alert('Error al generar el código: ' + response.mensaje);
+    }
+  } catch (error: any) {
+    console.error('Error generando código:', error.response?.data?.message || error.message);
+    alert('Error inesperado al generar el código.');
+  }
+};
 
   const handleEditarCorreo = () => {
     console.log("Volver a editar correo");

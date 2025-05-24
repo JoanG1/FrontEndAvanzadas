@@ -32,10 +32,12 @@ export interface CodigoValidacionFormProps {
 
   
 
-//TIPADO DE FORMULARIO VALIDACION DEL CODIGO
 export interface ValidarCodigoFormProps {
-	email: string;
+  email: string;
+  userId: string;
+  codigoGenerado: string;
 }
+
 
 
 //TIPADO DE FORMULARIO DE RECUPERACION DE CUENTA

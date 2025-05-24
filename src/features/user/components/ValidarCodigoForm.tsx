@@ -2,13 +2,19 @@ import { FC, useState, useRef } from "react";
 import { Button } from "../../../components/ui/Button";
 import type { ValidarCodigoFormProps } from "../../../types/user";
 import "../../../styles/ValidarCodigoForm.css";
+import { validarCodigoActivacion } from '../../user/userServices/api';
 
 interface Props extends ValidarCodigoFormProps {
   onSuccess: () => void;
   onError: () => void;
 }
 
-export const ValidarCodigoForm: FC<Props> = ({ email, onSuccess, onError }) => {
+export const ValidarCodigoForm: FC<Props> = ({
+  email,
+  codigoGenerado,
+  onSuccess,
+  onError
+}) => {
   const [codigo, setCodigo] = useState(["", "", "", ""]);
   const inputsRef = useRef<Array<HTMLInputElement | null>>([]);
 
@@ -29,45 +35,57 @@ export const ValidarCodigoForm: FC<Props> = ({ email, onSuccess, onError }) => {
     }
   };
 
-  const handleValidar = () => {
-    const codigoIngresado = codigo.join("");
-    if (codigoIngresado === "1234") {
-      console.log(JSON.stringify({ mensaje: "Código correcto", codigo: codigoIngresado }));
+  const handleValidar = async () => {
+  const codigoIngresado = codigo.join("");
+
+  if (codigoGenerado==codigoIngresado){
+
+    console.log("Codigo generado "+ codigoGenerado + " Codigo ingresado "+codigoIngresado+" Email"+ email)
+      try {
+    const response = await validarCodigoActivacion(email, codigoIngresado);
+    console.log(response.error)
+    if (!response.error) {
+      console.log("✅ Activación exitosa:", response.mensaje);
       onSuccess();
     } else {
-      console.log(JSON.stringify({ error: "Código inválido", codigo: codigoIngresado }));
+      console.warn("❌ Activación fallida:", response.mensaje);
       onError();
     }
-  };
-
-  return (
-      <div className="validar-codigo-wrapper">
-        <div className="validar-codigo-container">
-          <h2 className="validar-codigo-title">Código de verificación</h2>
-          <p className="validar-codigo-texto">
-            Ingrese el número de verificación que le enviamos a su correo <strong>{email}</strong>
-          </p>
-
-          <div className="codigo-input-group">
-            {codigo.map((digit, index) => (
-                <input
-                    key={index}
-                    ref={(el) => {
-                      inputsRef.current[index] = el;
-                    }}
-                    type="text"
-                    maxLength={1}
-                    className="codigo-digit-input"
-                    value={digit}
-                    onChange={(e) => handleChange(index, e.target.value)}
-                    onKeyDown={(e) => handleKeyDown(e, index)}
-                />
-            ))}
-          </div>
-
-          <Button onClick={handleValidar}>Verificar</Button>
-        </div>
-      </div>
-  );
+  } catch (error: any) {
+    console.error("❌ Error de red o servidor:", error.message);
+    onError();
+  }
+  }
+  
 };
 
+  return (
+    <div className="validar-codigo-wrapper">
+      <div className="validar-codigo-container">
+        <h2 className="validar-codigo-title">Código de verificación</h2>
+        <p className="validar-codigo-texto">
+          Ingrese el número de verificación que le enviamos a su correo <strong>{email}</strong>
+        </p>
+
+        <div className="codigo-input-group">
+          {codigo.map((digit, index) => (
+            <input
+              key={index}
+              ref={(el) => {
+                inputsRef.current[index] = el;
+              }}
+              type="text"
+              maxLength={1}
+              className="codigo-digit-input"
+              value={digit}
+              onChange={(e) => handleChange(index, e.target.value)}
+              onKeyDown={(e) => handleKeyDown(e, index)}
+            />
+          ))}
+        </div>
+
+        <Button onClick={handleValidar}>Verificar</Button>
+      </div>
+    </div>
+  );
+};

@@ -10,3 +10,16 @@ export const registerUser = async (data: FormDataRegister) => {
   const response = await apiClient.post('/api/auth/register', data);
   return response.data;
 };
+
+export const generarCodigoValidacion = async (userId: string) => {
+  const response = await apiClient.post('/codigo-validacion/generar', { idUsuario: userId });
+  return response.data;
+};
+
+export const validarCodigoActivacion = async (email: string, codigoActivacion: string) => {
+  const response = await apiClient.post('/api/usuarios/activar', {
+    email,
+    codigoActivacion
+  });
+  return response.data;
+};
