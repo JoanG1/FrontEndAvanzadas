@@ -10,12 +10,12 @@ import { UserProfileIcon } from "../../../components/ui/UserProfileIcon";
 export const ModeratorDashboardPanel: React.FC = () => {
   const navigate = useNavigate();
 
-  const { moderador } = useUserReports();
+  const { usuario } = useUserReports();
 
   return (
     <div className="moderador-container">
       <UserProfileIcon />
-      <ReportesHeader usuario={moderador} titulo={"PANEL MODERADOR"} />
+      <ReportesHeader usuario={usuario} titulo={"PANEL MODERADOR"} />
 
       <div className="acciones-moderador">
         <button onClick={() => navigate("/moderador/reportes")}>

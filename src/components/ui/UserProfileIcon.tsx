@@ -6,14 +6,17 @@ import {
   FaMapMarkerAlt,
   FaTimes,
   FaFileAlt,
-  FaClipboard
+  FaClipboard,
+  FaUserShield
 } from "react-icons/fa";
 import "../../styles/UserProfileIcon.css";
+import useAuth from "../../hooks/useAuth";
 
 export const UserProfileIcon: FC = () => {
   const [open, setOpen] = useState(false);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const navigate = useNavigate();
+  const { rol } = useAuth(); // Obtén el rol del usuario autenticado
 
   const handleMouseEnter = () => {
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
@@ -56,6 +59,13 @@ export const UserProfileIcon: FC = () => {
         <div className="nav-icon" onClick={() => navigate("/")}>
           <FaMapMarkerAlt />
         </div>
+
+        {/* ✔️ Ícono solo visible para administradores */}
+        {(rol === "administrador" || rol === "ADMINISTRADOR") && (
+          <div className="nav-icon" title="Panel Administrador" onClick={() => navigate("/moderador-dashboard")}>
+            <FaUserShield />
+          </div>
+        )}
       </div>
     </div>
   );
