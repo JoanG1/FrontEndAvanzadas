@@ -1,12 +1,12 @@
     import React from "react";
-    import { useUserReports } from "../hooks/useUserReports";
+    import { useReportesPendientes } from "../hooks//useReportesPendientes";
     import { ReportList } from "../features/user/components/ReportList";
     import { ReportesHeader } from "../features/user/components/ReportesHeader";
     import "../styles/Reports.css";
     import { UserProfileIcon } from "../components/ui/UserProfileIcon";
 
     const MisReportes: React.FC = () => {
-    const { reportes, usuario } = useUserReports();
+    const { reportes, usuario } = useReportesPendientes();
 
     return (
         <div className="mis-reportes-container">

@@ -4,7 +4,7 @@ import { getUsuarioIdPorEmail, getReportesPorUsuario } from "../features/user/us
 import { Report } from "../types/report";
 import { UserInfo } from "../types/report";
 
-export const useUserReports = () => {
+export const useReportesPendientes = () => {
   const [reportes, setReportes] = useState<Report[]>([]);
   const [usuario, setUsuario] = useState<UserInfo | null>(null);
   const { email } = useAuth();
@@ -17,8 +17,8 @@ export const useUserReports = () => {
         const idUsuario = await getUsuarioIdPorEmail(email);
         const reportesDelUsuario = await getReportesPorUsuario(idUsuario);
 
-        const activos: Report[] = reportesDelUsuario
-          .filter((r) => r.estado?.toUpperCase() === "VERIFICADO")
+        const rechazados: Report[] = reportesDelUsuario
+          .filter((r) => r.estado?.toUpperCase() === "PENDIENTE")
           .map((r) => ({
             id: r.id?.timestamp ?? r.id?.toString(),
             titulo: r.titulo,
@@ -31,14 +31,14 @@ export const useUserReports = () => {
             importante: r.importante ?? false,
           }));
 
-        setReportes(activos);
+        setReportes(rechazados);
 
         setUsuario({
-          nombre: email,
+          nombre: email, // o usar otro servicio si quieres el nombre real
           rol: "Usuario",
         });
       } catch (err) {
-        console.error("Error al cargar reportes activos:", err);
+        console.error("Error al cargar reportes rechazados:", err);
       }
     };
 

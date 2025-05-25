@@ -11,7 +11,7 @@ interface Props {
 }
 
 export const ReportCard: FC<Props> = ({ data, onCommentAdded }) => {
-  const { comentarios, loading, refetch } = useComentariosPorReporte(data.id);
+  const { comentarios, refetch } = useComentariosPorReporte(data.id);
 
   const handleComment = () => {
     refetch();          // Actualiza comentarios del reporte

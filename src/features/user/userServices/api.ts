@@ -112,4 +112,9 @@ export const getComentariosPorReporte = async (idReporte: string): Promise<Comen
   return response.data;
 };
 
+export const getReportesPorUsuario = async (idUsuario: string): Promise<any[]> => {
+  const response = await apiClient.get(`/api/reportes/usuario/${idUsuario}`);
+  return response.data;
+};
+
 

@@ -20,7 +20,7 @@ export interface Report {
 
 export interface UserInfo {
   nombre: string;
-  rol: "usuario" | "administrador";
+  rol: string;
 }
 
 interface ReportFormProps {
