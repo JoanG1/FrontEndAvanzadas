@@ -117,4 +117,37 @@ export const getReportesPorUsuario = async (idUsuario: string): Promise<any[]> =
   return response.data;
 };
 
+export const crearCategoria = async (data: {
+  nombre: string;
+  descripcion: string;
+}) => {
+  const body = {
+    id: {
+      timestamp: "",
+      date: "",
+    },
+    nombre: data.nombre,
+    descripcion: data.descripcion,
+  };
 
+  const response = await apiClient.post("/api/admin/categorias", body);
+  return response.data;
+};
+
+export const getReportes = async (): Promise<any[]> => {
+  const response = await apiClient.get(`/api/reportes`);
+  return response.data;
+};
+
+
+export const cambiarEstadoReporte = async (id: number, nuevoEstado: string) => {
+  const idReporte: String= id.toString();
+  console.log(idReporte)
+  const body = {
+    idReporte,
+    nuevoEstado,
+  };
+
+  const response = await apiClient.post("/api/reportes/cambiar-estado", body);
+  return response.data;
+};

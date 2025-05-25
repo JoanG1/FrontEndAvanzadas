@@ -18,13 +18,13 @@ export const ModeratorDashboardPanel: React.FC = () => {
       <ReportesHeader usuario={usuario} titulo={"PANEL MODERADOR"} />
 
       <div className="acciones-moderador">
-        <button onClick={() => navigate("/moderador/reportes")}>
+        <button onClick={() => navigate("/reportes-revision")}>
           REVISION DE REPORTES
         </button>
-        <button onClick={() => navigate("/moderador/categorias")}>
+        <button onClick={() => navigate("/Crear-categoria")}>
           CREAR CATEGORIA
         </button>
-        <button onClick={() => navigate("/moderador/informes")}>
+        <button onClick={() => navigate("/generar-reporte")}>
           GENERACION DE INFORMES
         </button>
       </div>
