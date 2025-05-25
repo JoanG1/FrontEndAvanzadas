@@ -10,9 +10,14 @@ export interface Reporte {
   id: string;
   titulo: string;
   descripcion: string;
-  imagenUrl?: string;
-  ubicacion: string;
+  categoria: string;
+  estado: string;
+  eliminado: boolean;
+  importante: boolean;
   fecha: string;
   usuario: string;
-  comentarios: Comentario[];
+  ubicacion: string;
+  imagenUrl: string;
+  comentarios: any[]; // Podrías definir `Comentario[]` si ya tienes el tipo
 }
+

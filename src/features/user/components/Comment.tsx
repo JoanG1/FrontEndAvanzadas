@@ -6,7 +6,7 @@ export const Comment: FC<{ data: Comentario }> = ({ data }) => (
   <div className="comment">
     <div className="comment-header">
       <div className="comment-user">
-        <span>{data.usuario}</span>
+        <span>{data.usuario}</span> {/* nombre o id */}
       </div>
       <span className="comment-date">{data.fecha}</span>
     </div>

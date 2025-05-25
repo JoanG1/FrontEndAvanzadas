@@ -28,7 +28,7 @@ export const ReportFeed = () => {
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
       {reportes.map((reporte) => (
-        <ReportCard key={reporte.id} data={reporte} onCommentAdded={refetch} />
+      <ReportCard key={reporte.id} data={reporte} onCommentAdded={refetch} />
       ))}
 
       {/* Sentinel */}

@@ -56,6 +56,12 @@ interface MessagePanelProps {
   mensaje: string;
 }
 
+export interface Comentario {
+  id: string;
+  usuario: string; // actualmente no existe en la respuesta
+  fecha: string;
+  mensaje: string; // actualmente llamado "contenido"
+}
 
 
 

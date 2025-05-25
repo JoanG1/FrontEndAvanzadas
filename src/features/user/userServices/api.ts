@@ -1,6 +1,8 @@
 import { apiClient } from '../../../services/apiClient';
 import { FormDataLogin,FormDataRegister  } from '../../../types/user';
 import axios from 'axios';
+import { Reporte } from '../../../types/reportFeed';
+import { Comentario } from '../../../types/user';
 
 export const loginUser = async (data: FormDataLogin) => {
   const response = await apiClient.post('/api/auth/login', data);
@@ -82,5 +84,32 @@ export const uploadImage = async (reportId: string, file: File): Promise<string>
 };
 
 
+export const getTodosLosReportes = async (): Promise<Reporte[]> => {
+  const response = await apiClient.get('/api/reportes');
+  return response.data;
+};
+
+export const comentarReporte = async (
+  idReporte: string,
+  contenido: string,
+  idUsuario: string
+) => {
+  const response = await apiClient.post('/api/comentarios', {
+    contenido,
+    idUsuario,
+    idReporte,
+  });
+  return response.data;
+};
+
+export const getUsuarioIdPorEmail = async (email: string): Promise<string> => {
+  const response = await apiClient.get(`/api/usuarios/id/${email}`);
+  return response.data.mensaje; // ya que el ID viene en el campo "mensaje"
+};
+
+export const getComentariosPorReporte = async (idReporte: string): Promise<Comentario[]> => {
+  const response = await apiClient.get(`/api/comentarios/${idReporte}`);
+  return response.data;
+};
 
 

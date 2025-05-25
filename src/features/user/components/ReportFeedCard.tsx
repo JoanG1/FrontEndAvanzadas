@@ -3,6 +3,7 @@ import { FC } from "react";
 import { Reporte } from "../../../types/reportFeed";
 import { CommentSection } from "./CommentSection";
 import { LocationHighlight } from "./LocationHighlight";
+import { useComentariosPorReporte } from "../../../hooks/useComentarioPorReporte";
 
 interface Props {
   data: Reporte;
@@ -10,6 +11,13 @@ interface Props {
 }
 
 export const ReportCard: FC<Props> = ({ data, onCommentAdded }) => {
+  const { comentarios, loading, refetch } = useComentariosPorReporte(data.id);
+
+  const handleComment = () => {
+    refetch();          // Actualiza comentarios del reporte
+    onCommentAdded();   // Notifica al padre si es necesario
+  };
+
   return (
     <div className="report-card">
       <div className="report-header">
@@ -27,14 +35,10 @@ export const ReportCard: FC<Props> = ({ data, onCommentAdded }) => {
       <p className="report-description">{data.descripcion}</p>
       <LocationHighlight text={data.ubicacion} />
 
-      <div className="report-footer">
-        <button className="comentar-btn">COMENTAR</button>
-      </div>
-
       <CommentSection
-        comentarios={data.comentarios}
         reporteId={data.id}
-        onComment={onCommentAdded}
+        comentarios={comentarios}
+        onComment={handleComment}
       />
     </div>
   );

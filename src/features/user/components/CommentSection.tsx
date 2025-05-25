@@ -1,8 +1,10 @@
-import "../../../styles/comment-section.css";
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { Comentario } from "../../../types/reportFeed";
 import { Comment } from "./Comment";
 import { CommentInput } from "./CommentInput";
+import { getUsuarioIdPorEmail } from "../userServices/api";
+import useAuth from "../../../hooks/useAuth";
+import "../../../styles/comment-section.css"
 
 interface Props {
   comentarios: Comentario[];
@@ -15,11 +17,32 @@ export const CommentSection: FC<Props> = ({
   reporteId,
   onComment,
 }) => {
-  const [comentariosLocales, setComentariosLocales] = useState(comentarios);
+  const [comentariosLocales, setComentariosLocales] = useState<Comentario[]>(comentarios);
+  const [idUsuario, setIdUsuario] = useState<string | null>(null);
+
+  const { email } = useAuth();
+
+  useEffect(() => {
+    setComentariosLocales(comentarios); // 🔥 Esto resuelve el bug
+  }, [comentarios]);
+
+  useEffect(() => {
+    const fetchUsuarioId = async () => {
+      try {
+        if (email) {
+          const id = await getUsuarioIdPorEmail(email);
+          setIdUsuario(id);
+        }
+      } catch (err) {
+        console.error("Error obteniendo ID de usuario:", err);
+      }
+    };
+
+    fetchUsuarioId();
+  }, [email]);
 
   const reloadComentarios = () => {
-    setComentariosLocales([...comentariosLocales]);
-    onComment();
+    onComment(); // 🔄 Esto llama a refetch en el hook
   };
 
   return (
@@ -30,7 +53,14 @@ export const CommentSection: FC<Props> = ({
           <Comment key={c.id} data={c} />
         ))}
       </div>
-      <CommentInput reporteId={reporteId} onComment={reloadComentarios} />
+
+      {idUsuario && (
+        <CommentInput
+          reporteId={reporteId}
+          idUsuario={idUsuario}
+          onComment={reloadComentarios}
+        />
+      )}
     </div>
   );
 };
