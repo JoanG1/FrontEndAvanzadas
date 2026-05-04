@@ -18,6 +18,6 @@ export interface Reporte {
   usuario: string;
   ubicacion: string;
   imagenUrl: string;
-  comentarios: any[]; // Podrías definir `Comentario[]` si ya tienes el tipo
+  comentarios: any[];
+  seguidores?: number; // NUEVO: contador de seguidores
 }
-

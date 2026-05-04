@@ -47,6 +47,14 @@ export const getCategorias = async () => {
   return response.data;
 };
 
+
+export const seguirReporte = async (idReporte: string, idUsuario: string): Promise<string> => {
+  const response = await apiClient.post(
+    `/api/reportes/${idReporte}/seguir?idUsuario=${idUsuario}`
+  );
+  return response.data.mensaje;
+};
+
 export const crearReporte = async (email: string ,data: {
   titulo: string;
   descripcion: string;
@@ -70,22 +78,25 @@ export const uploadImage = async (reportId: string, file: File): Promise<string>
   formData.append('file', file);
 
   const response = await axios.post(
-    `http://localhost:8080/api/images/upload?id=${reportId}`,
+    `${import.meta.env.VITE_API_URL}/api/images/upload?id=${reportId}`,
     formData,
     {
       headers: {
         Authorization: `Bearer ${token}`,
-        // NO pongas Content-Type aquí; el navegador lo gestiona automáticamente
       },
     }
   );
 
-  return response.data; // Asegúrate que tu backend devuelve { url: "..." }
+  return response.data;
 };
-
 
 export const getTodosLosReportes = async (): Promise<Reporte[]> => {
   const response = await apiClient.get('/api/reportes');
+  return response.data;
+};
+
+export const getReportesPendientes = async (): Promise<any[]> => {
+  const response = await apiClient.get(`/api/reportes/pendientes`);
   return response.data;
 };
 
@@ -139,15 +150,33 @@ export const getReportes = async (): Promise<any[]> => {
   return response.data;
 };
 
-
-export const cambiarEstadoReporte = async (id: number, nuevoEstado: string) => {
-  const idReporte: String= id.toString();
-  console.log(idReporte)
+export const cambiarEstadoReporte = async (id: number, nuevoEstado: string, nivelImpacto?: string) => {
   const body = {
-    idReporte,
+    idReporte: id.toString(),
     nuevoEstado,
+    nivelImpacto: nivelImpacto ?? "",
   };
 
-  const response = await apiClient.post("/api/reportes/cambiar-estado", body);
+  const response = await apiClient.put("/api/reportes/cambiar-estado", body);
   return response.data;
 };
+
+
+export const recuperarContrasena = async (
+  email: string,
+  codigoVerificacion: string,
+  nuevaContrasena: string
+) => {
+  const response = await apiClient.put("/api/usuarios/recuperar-contrasena", {
+    email,
+    codigoVerificacion,
+    nuevaContrasena,
+  });
+  return response.data;
+};
+
+export const getHistorialReporte = async (idReporte: string): Promise<any[]> => {
+  const response = await apiClient.get(`/api/reportes/${idReporte}/historial`);
+  return response.data;
+};
+

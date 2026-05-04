@@ -1,53 +1,56 @@
-.crear-categoria-container {
-  display: flex;
-  flex-direction: column;
-  background: rgb(255, 255, 255); /* blanco sólido */
-  border-radius: 1rem;
-  padding: 1.5rem;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-  max-width: 900px;
-  width: 100%;
-  height: auto;
-  margin: 2rem auto;
-}
-
 .crear-categoria-form {
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  padding: 1rem 0;
 }
 
 .crear-categoria-form label {
+  color: #ffffff;
   font-weight: bold;
-  color: #000;
+  font-size: 1rem;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.6);
 }
 
 .crear-categoria-form input,
 .crear-categoria-form textarea {
+  box-sizing: border-box;
   width: 100%;
-  padding: 0.75rem;
+  background: rgba(255, 255, 255, 0.85);
+  color: #2C0844;
+  border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 0.5rem;
-  border: 1px solid #ccc;
-  background-color: white;
-  color: black;
+  padding: 0.75rem 1rem;
   font-size: 1rem;
+  outline: none;
+  resize: vertical;
 }
 
-.crear-categoria-form textarea {
-  resize: none;
+.crear-categoria-form input:focus,
+.crear-categoria-form textarea:focus {
+  border-color: #a855f7;
+  box-shadow: 0 0 0 2px rgba(168, 85, 247, 0.3);
 }
 
 .crear-categoria-form button {
-  background-color: #3a0ca3;
-  color: white;
-  padding: 0.75rem;
-  border-radius: 2rem;
-  border: none;
+  width: 100%;
+  padding: 1rem;
+  font-size: 1.1rem;
   font-weight: bold;
+  color: white;
+  background-color: #3a0057;
+  border: none;
+  border-radius: 1.5rem;
   cursor: pointer;
-  transition: 0.3s;
+  transition: background-color 0.3s ease;
+  margin-top: 0.5rem;
 }
 
 .crear-categoria-form button:hover {
-  background-color: #5f0fcd;
+  background-color: #5b0c88;
+}
+
+.crear-categoria-form button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }

@@ -1,40 +1,11 @@
 .form-container {
-  background: rgba(255, 255, 255, 0.658);
-  padding: 2rem;
-  border-radius: 1rem;
-  max-width: 500px;
+  background: transparent;
+  padding: 0;
   width: 100%;
-  margin: 0 auto;
   color: white;
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-.form-avatar {
-  display: flex;
-  justify-content: center;
-  position: relative;
-  margin-bottom: 2rem;
-}
-
-.avatar-img {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  background-color: #ccc;
-}
-
-.edit-icon {
-  position: absolute;
-  top: 65%;
-  right: 35%;
-  font-size: 1.2rem;
-  background: #fff;
-  color: #333;
-  border-radius: 50%;
-  padding: 4px;
-  transform: translate(50%, -50%);
 }
 
 .form-fields {
@@ -54,21 +25,24 @@
   width: 40%;
   font-weight: bold;
   text-align: left;
-  color: #2d1a4f;
-  
+  color: #ffffff;
 }
 
-.form-row input {
+.form-row input,
+.form-row select {
   width: 60%;
   padding: 0.5rem;
   border: none;
   border-radius: 8px;
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.85);
   color: #2d1a4f;
   font-weight: bold;
   text-align: center;
-  backdrop-filter: blur(4px);
-  
+}
+
+.form-row input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 .form-buttons {
@@ -91,4 +65,11 @@
 
 .form-buttons button:hover {
   background: #7f00ff;
+}
+
+.form-avatar {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  filter: drop-shadow(0 0 12px rgba(160, 80, 255, 0.6));
 }

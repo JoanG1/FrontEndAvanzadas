@@ -4,7 +4,13 @@ html, body, #root {
     padding: 0;
     overflow: hidden;
 }
+
 .validar-codigo-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -13,7 +19,6 @@ html, body, #root {
     background-size: cover;
     background-position: center;
 }
-
 
 .validar-codigo-container {
     background: rgba(255, 255, 255, 0.08);
@@ -27,13 +32,13 @@ html, body, #root {
 }
 
 .validar-codigo-title {
-    font-size: 2.5rem;         /* Aumenta el tamaño */
-    color: #2C0844;            /* Color oscuro */
-    font-weight: 900;          /* Extra negrita */
-    text-align: center;        /* Centrado */
-    margin-bottom: 1.5rem;     /* Espacio inferior */
-    text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.6); /* Sombra clara */
-    letter-spacing: 1px;       /* Espaciado entre letras */
+    font-size: 2.5rem;
+    color: #ffffff;                                         /* blanco */
+    font-weight: 900;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.8), 0 0 30px rgba(160, 80, 255, 0.5);
+    letter-spacing: 1px;
 }
 
 .validar-codigo-texto {
@@ -90,4 +95,3 @@ html, body, #root {
     background-color: #1d0632;
     transform: scale(1.03);
 }
-

@@ -1,9 +1,9 @@
 import { useEffect, useState, useCallback } from "react";
 import useAuth from "../hooks/useAuth";
-import { getReportesPendientes, getUsuarioPorEmail } from '../features/user/userServices/api';
+import { getReportes, getUsuarioPorEmail } from "../features/user/userServices/api";
 import { Report, UserInfo } from "../types/report";
 
-export const useReportesPendientesAdmin = () => {
+export const useReportesRechazadosAdmin = () => {
   const [reportes, setReportes] = useState<Report[]>([]);
   const [usuario, setUsuario] = useState<UserInfo | null>(null);
   const { email } = useAuth();
@@ -12,12 +12,14 @@ export const useReportesPendientesAdmin = () => {
     try {
       if (!email) return;
       const [todos, usuarioData] = await Promise.all([
-        getReportesPendientes(),
+        getReportes(),
         getUsuarioPorEmail(email),
       ]);
 
-      const pendientes: Report[] = todos.map((r) => {
-        return {
+      const rechazados: Report[] = todos
+        .filter((r) => r.estado?.toUpperCase() === "RECHAZADO")
+        .map((r) => ({
+          // FIX: usar $oid para obtener el ObjectId real de MongoDB
           id: r.id?.$oid ?? r.id?.toString() ?? String(r.id),
           titulo: r.titulo,
           descripcion: r.descripcion,
@@ -27,17 +29,15 @@ export const useReportesPendientesAdmin = () => {
           fecha: new Date(r.fechaCreacion).toLocaleString(),
           imagenUrl: r.imagenes?.find((img: string) => img && img.length > 0) ?? "",
           importante: r.importante ?? false,
-          seguidores: r.seguidores?.length ?? 0,
-        };
-      });
+        }));
 
-      setReportes(pendientes);
+      setReportes(rechazados);
       setUsuario({
         nombre: usuarioData.mensaje?.nombre ?? email,
         rol: "Administrador",
       });
     } catch (err) {
-      console.error("Error al cargar reportes pendientes:", err);
+      console.error("Error al cargar reportes rechazados:", err);
     }
   }, [email]);
 

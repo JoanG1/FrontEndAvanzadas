@@ -5,17 +5,21 @@ export interface ReportFormData {
   location: string;
   description: string;
   images: File[];
-  longitud: number,
-  latitud: number
+  longitud: number;
+  latitud: number;
 }
 
 export interface Report {
-  id: number;
+  id: string;                          // FIX: era number, ahora string (ObjectId de MongoDB)
   titulo: string;
+  descripcion?: string;
   categoria: string;
   ubicacion: string;
   imagenUrl: string;
-  estado: "verificado" | "pendiente";
+  estado: string;                      // FIX: era union estrecha, ahora string flexible
+  fecha?: string;
+  importante?: boolean;
+  seguidores?: number;                 // NUEVO: contador de seguidores
 }
 
 export interface UserInfo {
@@ -23,10 +27,9 @@ export interface UserInfo {
   rol: string;
 }
 
-interface ReportFormProps {
+export interface ReportFormProps {
   initialData?: ReportFormData;
   onSubmit: (data: ReportFormData) => void;
   submitButtonText?: string;
   onBack?: () => void;
 }
-

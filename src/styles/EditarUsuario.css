@@ -4,25 +4,29 @@
   justify-content: center;
   align-items: center;
   padding: 2rem;
-  font-family: 'Arial', sans-serif;
+  background-image: url('/fondo.jpg');
+  background-size: cover;
+  background-position: center;
+  box-sizing: border-box;
 }
 
 .editar-usuario-wrapper {
-  background: rgba(255, 255, 255, 0.6);
-  border: 2px solid rgba(255, 255, 255, 0.1);
-  border-radius: 20px;
-  box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
-  padding: 2rem;
-  color: white;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 1rem;
+  box-shadow: 0 8px 48px rgba(0, 0, 0, 0.5);
+  padding: 2rem 2.5rem;
   width: 100%;
   max-width: 600px;
   text-align: center;
 }
 
 .editar-usuario-title {
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   font-weight: bold;
   margin-bottom: 2rem;
-  color: #2d1a4f;
-  text-shadow: 1px 1px 5px #453661;
+  color: #ffffff;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.8), 0 0 30px rgba(160, 80, 255, 0.5);
 }

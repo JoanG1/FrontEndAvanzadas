@@ -14,8 +14,16 @@ export const useReportes = () => {
     try {
       const res = await getTodosLosReportes();
 
-      const mapeados: Reporte[] = res.map((r: any) => ({
-        id: r.id,
+      // Ordenar por fechaCreacion descendente (más reciente primero) antes de mapear
+      const ordenados = [...res].sort((a: any, b: any) => {
+        const fechaA = new Date(a.fechaCreacion).getTime();
+        const fechaB = new Date(b.fechaCreacion).getTime();
+        return fechaB - fechaA;
+      });
+
+
+      const mapeados: Reporte[] = ordenados.map((r: any) => ({
+        id: r.id?.$oid ?? r.id?.toString() ?? String(r.id),
         titulo: r.titulo,
         descripcion: r.descripcion,
         categoria: r.categoria,
@@ -23,10 +31,12 @@ export const useReportes = () => {
         eliminado: r.eliminado,
         importante: r.importante,
         fecha: new Date(r.fechaCreacion).toLocaleString(),
-        usuario: r.idUsuario || "Usuario desconocido",
+        usuario: r.nombreUsuario || "Usuario desconocido",
         ubicacion: r.ubicacion?.direccion || "Ubicación desconocida",
         imagenUrl: r.imagenes?.find((url: string) => url?.length > 0) || "",
-        comentarios: [], // Puedes poblar esto después con otro hook o API
+        comentarios: [],
+        // FIX: mapear seguidores desde el backend
+        seguidores: Array.isArray(r.seguidores) ? r.seguidores.length : (r.seguidores ?? 0),
       }));
 
       setReportes(mapeados);
@@ -43,9 +53,7 @@ export const useReportes = () => {
   }, [fetchReportes]);
 
   const refetch = () => fetchReportes();
-  const loadMore = () => {
-    // Lógica de paginación futura
-  };
+  const loadMore = () => {};
 
   return { reportes, loading, error, refetch, loadMore };
 };

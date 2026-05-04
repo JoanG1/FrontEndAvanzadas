@@ -22,19 +22,13 @@ export const EditarUsuarioForm: FC = () => {
           const response = await getUsuarioPorEmail(email);
           if (!response.error) {
             const { nombre, telefono, direccion, ciudad } = response.mensaje;
-            setFormData({
-              nombre,
-              telefono,
-              direccion,
-              ciudad: ciudad || ""
-            });
+            setFormData({ nombre, telefono, direccion, ciudad: ciudad || "" });
           }
         } catch (err) {
           console.error("Error al cargar usuario:", err);
         }
       }
     };
-
     fetchData();
   }, [email]);
 
@@ -61,9 +55,13 @@ export const EditarUsuarioForm: FC = () => {
 
   return (
     <div className="form-container">
+      {/* Avatar SVG inline */}
       <div className="form-avatar">
-        <img src="/avatar.svg" alt="Avatar" className="avatar-img" />
-        <span className="edit-icon">✏️</span>
+        <svg width="90" height="90" viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="45" cy="45" r="45" fill="rgba(255,255,255,0.15)" />
+          <circle cx="45" cy="34" r="16" fill="rgba(255,255,255,0.85)" />
+          <ellipse cx="45" cy="75" rx="24" ry="16" fill="rgba(255,255,255,0.85)" />
+        </svg>
       </div>
 
       <div className="form-fields">
@@ -71,32 +69,28 @@ export const EditarUsuarioForm: FC = () => {
           <label>CORREO</label>
           <input name="email" value={email || ""} disabled />
         </div>
-
         <div className="form-row">
           <label>NOMBRE</label>
           <input name="nombre" value={formData.nombre} onChange={handleChange} />
         </div>
-
         <div className="form-row">
           <label>TELÉFONO</label>
           <input name="telefono" value={formData.telefono} onChange={handleChange} />
         </div>
-
         <div className="form-row">
           <label>DIRECCIÓN</label>
           <input name="direccion" value={formData.direccion} onChange={handleChange} />
         </div>
-
         <div className="form-row">
           <label>CIUDAD</label>
           <select name="ciudad" value={formData.ciudad} onChange={handleChange}>
             <option value="">Seleccione una ciudad</option>
-            <option value="MEDELLIN">MEDELLIN</option>
-            <option value="PEREIRA">PEREIRA</option>
-            <option value="BOGOTA">BOGOTA</option>
-            <option value="ARMENIA">ARMENIA</option>
-            <option value="MANIZALES">MANIZALES</option>
-            <option value="CALI">CALI</option>
+            <option value="MEDELLIN">Medellín</option>
+            <option value="PEREIRA">Pereira</option>
+            <option value="BOGOTA">Bogotá</option>
+            <option value="ARMENIA">Armenia</option>
+            <option value="MANIZALES">Manizales</option>
+            <option value="CALI">Cali</option>
           </select>
         </div>
       </div>

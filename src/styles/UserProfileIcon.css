@@ -1,8 +1,8 @@
 .user-profile-icon {
-  position: absolute;
+  position: fixed;
   top: 20px;
   left: 20px;
-  z-index: 100;
+  z-index: 200;
 }
 
 .user-icon-circle {
@@ -47,7 +47,7 @@
 
 /* Panel lateral */
 .side-panel {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 70px;
@@ -59,7 +59,7 @@
   padding-top: 20px;
   transition: transform 0.3s ease-in-out;
   transform: translateX(-100%);
-  z-index: 99;
+  z-index: 199;
 }
 
 .side-panel.open {
@@ -72,7 +72,7 @@
   border-radius: 50%;
   width: 50px;
   height: 50px;
-  margin: 12px 0;
+  margin: 10px 0;
   display: flex;
   align-items: center;
   justify-content: center;

@@ -11,47 +11,37 @@ const ValidarCodigo: React.FC = () => {
 
   const { email, userId, codigoGenerado } = location.state || {};
 
-  // Validar que tenemos todos los datos
   if (!email || !userId || !codigoGenerado) {
     return <Navigate to="/register" />;
   }
 
-  // Redirigir automáticamente si la activación fue exitosa
   useEffect(() => {
     if (estado === "valido") {
       const timer = setTimeout(() => {
         navigate("/login");
       }, 5000);
-
       return () => clearTimeout(timer);
     }
   }, [estado, navigate]);
 
-  const handleReenviarCodigo = () => {
-    console.log("Código reenviado."); // Aquí podrías volver a llamar al backend si quieres
-    setEstado("pendiente");
-  };
+  const handleReenviarCodigo = () => setEstado("pendiente");
+  const handleSalir = () => navigate("/");
 
-  const handleSalir = () => {
-    navigate("/"); // Redirigir a home, login u otra ruta según tu flujo
-  };
-
+  // Sin div wrapper — ValidarCodigoForm ya tiene su propio fondo completo
   return (
-    <div className="p-4">
+    <>
       {estado === "valido" && (
         <MessagePanel
           titulo="Activación de cuenta"
           mensaje="La activación de la cuenta fue exitosa. Serás redirigido en 5 segundos..."
         />
       )}
-
       {estado === "invalido" && (
         <ActivacionErrorPanel
           onReenviar={handleReenviarCodigo}
           onSalir={handleSalir}
         />
       )}
-
       {estado === "pendiente" && (
         <ValidarCodigoForm
           email={email}
@@ -61,7 +51,7 @@ const ValidarCodigo: React.FC = () => {
           onError={() => setEstado("invalido")}
         />
       )}
-    </div>
+    </>
   );
 };
 

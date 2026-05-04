@@ -1,14 +1,16 @@
 .user-card-container {
-  background: rgba(255, 255, 255, 0.784);
-  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.08);  /* <- de 0.784 a 0.08 */
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
   padding: 2rem;
   border-radius: 0.75rem;
   max-width: 900px;
   width: 1000px;
   height: 450px;
   margin: 0 auto;
-  color: #2d1a4f;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  color: #ffffff;                          /* texto blanco para que se vea sobre el glass */
+  box-shadow: 0 8px 48px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 .user-card-header {
@@ -40,12 +42,14 @@
 .user-name {
   font-weight: bold;
   font-size: 1.5rem;
+  color: #ffffff;
 }
 
 .user-role,
 .user-email {
   font-weight: 500;
   font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.75);
 }
 
 .user-info-body {
@@ -57,8 +61,9 @@
 .user-info-row {
   display: flex;
   justify-content: space-around;
-  align-items: center; /* 💥 Esto centra verticalmente los elementos */
+  align-items: center;
   font-size: 1rem;
+  color: #ffffff;
 }
 
 .user-info-row input[type="checkbox"] {
@@ -67,10 +72,9 @@
   cursor: pointer;
 }
 
-
-
 .label {
   font-weight: bold;
+  color: #ffffff;
 }
 
 .user-card-footer {

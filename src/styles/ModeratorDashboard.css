@@ -1,17 +1,27 @@
+.moderador-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: url('/fondo.jpg');
+  background-size: cover;
+  background-position: center;
+}
 
 .moderador-container {
   display: flex;
   flex-direction: column;
-  background: rgba(240, 240, 240, 0.95);
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 1rem;
   padding: 1.5rem;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
   max-width: 900px;
-  width: 100%;
-  height: auto;
-  margin: 0 auto; /* Horizontal */
-  align-items: center; /* 🟢 centra horizontalmente */
-  min-height:90vh ;/* ocupa toda la altura de la pantalla */
+  width: 90%;
+  align-items: center;
+  min-height: 90vh;
 }
 
 .acciones-moderador {

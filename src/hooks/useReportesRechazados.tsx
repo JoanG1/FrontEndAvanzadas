@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import useAuth from "../hooks/useAuth";
-import { getUsuarioIdPorEmail, getReportesPorUsuario } from "../features/user/userServices/api";
-import { Report } from "../types/report";
-import { UserInfo } from "../types/report";
+import { getUsuarioIdPorEmail, getReportesPorUsuario, getUsuarioPorEmail } from "../features/user/userServices/api";
+import { Report, UserInfo } from "../types/report";
 
 export const useReportesRechazados = () => {
   const [reportes, setReportes] = useState<Report[]>([]);
@@ -14,13 +13,18 @@ export const useReportesRechazados = () => {
       try {
         if (!email) return;
 
-        const idUsuario = await getUsuarioIdPorEmail(email);
+        const [idUsuario, usuarioData] = await Promise.all([
+          getUsuarioIdPorEmail(email),
+          getUsuarioPorEmail(email),
+        ]);
+
         const reportesDelUsuario = await getReportesPorUsuario(idUsuario);
 
         const rechazados: Report[] = reportesDelUsuario
           .filter((r) => r.estado?.toUpperCase() === "RECHAZADO")
           .map((r) => ({
-            id: r.id?.timestamp ?? r.id?.toString(),
+            // FIX: usar $oid para obtener el ObjectId real de MongoDB
+            id: r.id?.$oid ?? r.id?.toString() ?? String(r.id),
             titulo: r.titulo,
             descripcion: r.descripcion,
             categoria: r.categoria,
@@ -32,10 +36,9 @@ export const useReportesRechazados = () => {
           }));
 
         setReportes(rechazados);
-
         setUsuario({
-          nombre: email, // o usar otro servicio si quieres el nombre real
-          rol: "Usuario",
+          nombre: usuarioData.mensaje?.nombre ?? email,
+          rol: usuarioData.mensaje?.rol ?? "Usuario",
         });
       } catch (err) {
         console.error("Error al cargar reportes rechazados:", err);

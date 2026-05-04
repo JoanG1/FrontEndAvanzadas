@@ -1,6 +1,7 @@
 import React from 'react';
 import { useLocation, Navigate } from 'react-router-dom';
 import { CodigoValidacionForm } from '../features/user/components/CodigoValidacionForm';
+import '../styles/CodigoValidacionForm.css';
 
 const CodigoValidacion: React.FC = () => {
   const location = useLocation();
@@ -12,7 +13,7 @@ const CodigoValidacion: React.FC = () => {
   }
 
   return (
-    <div className="p-4">
+    <div className="codigo-validacion-page">
       <CodigoValidacionForm email={email} userId={userId} />
     </div>
   );

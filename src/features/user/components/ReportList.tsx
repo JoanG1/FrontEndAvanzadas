@@ -2,31 +2,46 @@ import { FC } from "react";
 import { Report } from "../../../types/report";
 import { ReportCard } from "./ReportCard";
 import "../../../styles/Reports.css";
-import { cambiarEstadoReporte } from "../userServices/api"; // ajusta el path
+import { cambiarEstadoReporte } from "../userServices/api";
 
 interface Props {
   reportes: Report[];
+  onRefetch: () => void;
+  showAdminActions?: boolean;
 }
 
-export const ReportList: FC<Props> = ({ reportes }) => {
-  const handleEditar = async (id: number) => {
-    const nuevoEstado = prompt("Ingrese el nuevo estado (ej: VERIFICADO, RECHAZADO, ACTIVO)");
-
-    if (!nuevoEstado) return;
-
+export const ReportList: FC<Props> = ({
+  reportes,
+  onRefetch,
+  showAdminActions = false,
+}) => {
+  const handleVerificar = async (id: string, nivelImpacto: string) => {
     try {
-      await cambiarEstadoReporte(id, nuevoEstado);
-      alert("Estado actualizado correctamente.");
-      // TODO: aquí puedes recargar los reportes si tienes un `refetch()`
+      await cambiarEstadoReporte(id as any, "VERIFICADO", nivelImpacto);
+      onRefetch();
     } catch (err) {
-      console.error("Error al cambiar estado:", err);
-      alert("Error al actualizar el estado del reporte.");
+      console.error("Error al verificar:", err);
+      alert("Error al verificar el reporte.");
     }
   };
 
-  const handleEliminar = (id: number) => {
-    alert(`Eliminar reporte ID: ${id}`);
+  const handleRechazar = async (id: string, nivelImpacto: string) => {
+    try {
+      await cambiarEstadoReporte(id as any, "RECHAZADO", nivelImpacto);
+      onRefetch();
+    } catch (err) {
+      console.error("Error al rechazar:", err);
+      alert("Error al rechazar el reporte.");
+    }
   };
+
+  if (reportes.length === 0) {
+    return (
+      <p style={{ textAlign: "center", color: "rgba(255,255,255,0.6)", marginTop: "2rem" }}>
+        No hay reportes pendientes.
+      </p>
+    );
+  }
 
   return (
     <div className="report-list">
@@ -34,8 +49,9 @@ export const ReportList: FC<Props> = ({ reportes }) => {
         <ReportCard
           key={r.id}
           reporte={r}
-          onEditar={handleEditar}
-          onEliminar={handleEliminar}
+          showAdminActions={showAdminActions}
+          onVerificar={showAdminActions ? handleVerificar : undefined}
+          onRechazar={showAdminActions ? handleRechazar : undefined}
         />
       ))}
     </div>
