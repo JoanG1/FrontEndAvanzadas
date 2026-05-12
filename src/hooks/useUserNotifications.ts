@@ -1,36 +1,84 @@
-import { useEffect, useState } from "react";
-import { Notification, UserInfo } from "../types/notification";
+import { useEffect, useState, useRef } from "react";
+import { Client } from "@stomp/stompjs";
+import SockJS from "sockjs-client";
+import useAuth from "./useAuth";
+
+export interface Notification {
+  id: number;
+  titulo: string;
+  mensaje: string;
+  fecha: string;
+  leido: boolean;
+}
+
+export interface UserInfo {
+  nombre: string;
+  rol: string;
+}
 
 export const useUserNotifications = () => {
   const [notificaciones, setNotificaciones] = useState<Notification[]>([]);
   const [usuario, setUsuario] = useState<UserInfo | null>(null);
+  const clientRef = useRef<Client | null>(null);
+  const { email } = useAuth();
 
   useEffect(() => {
-    setUsuario({ nombre: "Tatiana Mosquera", rol: "usuario" });
-    setNotificaciones([
-      {
-        id: 1,
-        titulo: "TITULO DE NOTIFICACIONES",
-        mensaje: "Mensaje larguisimooo de notificacion enviado por el que lo envio",
-        fecha: "5/03/24",
-        leido: true,
-      },
-      {
-        id: 2,
-        titulo: "TITULO DE NOTIFICACIONES",
-        mensaje: "Mensaje larguisimooo de notificacion enviado por el que lo envio",
-        fecha: "5/03/24",
-        leido: false,
-      },
-      {
-        id: 3,
-        titulo: "TITULO DE NOTIFICACIONES",
-        mensaje: "Mensaje larguisimooo de notificacion enviado por el que lo envio",
-        fecha: "5/03/24",
-        leido: false,
-      },
-    ]);
-  }, []);
+    if (email) {
+      setUsuario({ nombre: email, rol: "usuario" });
+    }
 
-  return { notificaciones, usuario };
+    // Conectar al WebSocket del backend
+    const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:8080";
+    const token = localStorage.getItem("jwt_token");
+
+    const client = new Client({
+      webSocketFactory: () => new SockJS(`${apiUrl}/ws`),
+      connectHeaders: token ? { Authorization: `Bearer ${token}` } : {},
+      reconnectDelay: 5000,
+      onConnect: () => {
+        console.log("✅ WebSocket conectado");
+        // Suscribirse al topic de reportes
+        client.subscribe("/topic/reports", (message) => {
+          try {
+            const reporte = JSON.parse(message.body);
+            const nuevaNotif: Notification = {
+              id: Date.now(),
+              titulo: `Reporte actualizado: ${reporte.titulo ?? "Sin título"}`,
+              mensaje: `Estado: ${reporte.estado ?? "Desconocido"} — ${reporte.descripcion ?? ""}`,
+              fecha: new Date().toLocaleString(),
+              leido: false,
+            };
+            setNotificaciones((prev) => [nuevaNotif, ...prev]);
+          } catch (e) {
+            console.error("Error al parsear notificación:", e);
+          }
+        });
+      },
+      onDisconnect: () => {
+        console.log("WebSocket desconectado");
+      },
+      onStompError: (frame) => {
+        console.error("Error STOMP:", frame);
+      },
+    });
+
+    client.activate();
+    clientRef.current = client;
+
+    return () => {
+      client.deactivate();
+    };
+  }, [email]);
+
+  const marcarLeido = (id: number) => {
+    setNotificaciones((prev) =>
+      prev.map((n) => (n.id === id ? { ...n, leido: true } : n))
+    );
+  };
+
+  const limpiarNotificaciones = () => {
+    setNotificaciones([]);
+  };
+
+  return { notificaciones, usuario, marcarLeido, limpiarNotificaciones };
 };
