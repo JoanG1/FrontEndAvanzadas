@@ -6,17 +6,18 @@ import "../styles/Reports.css";
 import { UserProfileIcon } from "../components/ui/UserProfileIcon";
 
 const MisNotificaciones: React.FC = () => {
-  const { notificaciones, usuario } = useUserNotifications();
+  const { notificaciones, usuario, marcarLeido, limpiarNotificaciones } = useUserNotifications();
 
   return (
-    // Usamos page-background para el fondo de ciudad centrado
     <div className="page-background">
       <UserProfileIcon />
-
-      {/* report-form-wrapper ya tiene el glass borroso y el centrado */}
       <div className="report-form-wrapper">
         <ReportesHeader usuario={usuario} titulo="MIS NOTIFICACIONES" />
-        <NotificationList notificaciones={notificaciones} />
+        <NotificationList
+          notificaciones={notificaciones}
+          onMarcarLeido={marcarLeido}
+          onLimpiar={limpiarNotificaciones}
+        />
       </div>
     </div>
   );

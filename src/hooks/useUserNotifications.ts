@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import { Client } from "@stomp/stompjs";
-import SockJS from "sockjs-client";
+import SockJS from "sockjs-client/dist/sockjs";
 import useAuth from "./useAuth";
 
 export interface Notification {
