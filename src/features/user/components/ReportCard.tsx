@@ -57,7 +57,6 @@ export const ReportCard: FC<Props> = ({
     try {
       const idUsuario = await getUsuarioIdPorEmail(email);
       const mensaje = await seguirReporte(reporte.id, idUsuario);
-      // Alternar estado local según respuesta del servidor
       setSiguiendo(mensaje.includes("sigues"));
     } catch (err) {
       console.error("Error al seguir reporte:", err);
@@ -98,7 +97,6 @@ export const ReportCard: FC<Props> = ({
         </p>
         <p style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.5)" }}>{reporte.ubicacion}</p>
         <p style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.5)" }}>{reporte.fecha}</p>
-        {/* Contador de seguidores */}
         <p style={{ fontSize: "0.78rem", color: "rgba(255,255,255,0.4)", marginTop: "4px" }}>
           👥 {reporte.seguidores ?? 0} {reporte.seguidores === 1 ? "seguidor" : "seguidores"}
         </p>
@@ -114,7 +112,6 @@ export const ReportCard: FC<Props> = ({
           {estado}
         </span>
 
-        {/* Botón Seguir — visible para usuarios (no admin) */}
         {!showAdminActions && (
           <button
             onClick={handleSeguir}
@@ -189,16 +186,23 @@ export const ReportCard: FC<Props> = ({
       </div>
 
       {showHistorial && (
-        <div style={{
-          position: "fixed", top: 0, left: 0, width: "100vw", height: "100vh",
-          background: "rgba(0,0,0,0.7)", display: "flex", alignItems: "center",
-          justifyContent: "center", zIndex: 1000,
-        }}>
-          <div style={{
-            background: "#1a1a2e", borderRadius: "12px", padding: "2rem",
-            maxWidth: "500px", width: "90%", maxHeight: "80vh", overflowY: "auto",
-          }}>
-            <h3 style={{ color: "white", marginBottom: "1rem" }}>
+        <div
+          style={{
+            position: "fixed", top: 0, left: 0, width: "100vw", height: "100vh",
+            background: "rgba(0,0,0,0.75)", display: "flex", alignItems: "center",
+            justifyContent: "center", zIndex: 9999,
+          }}
+          onClick={() => setShowHistorial(false)}
+        >
+          <div
+            style={{
+              background: "#1a1a2e", borderRadius: "16px", padding: "2rem",
+              maxWidth: "480px", width: "90%", maxHeight: "75vh", overflowY: "auto",
+              boxShadow: "0 8px 32px rgba(0,0,0,0.6)", boxSizing: "border-box",
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h3 style={{ color: "white", marginBottom: "1.5rem", fontSize: "1.1rem", margin: "0 0 1.5rem 0" }}>
               Historial de {reporte.titulo}
             </h3>
             {historial.length === 0 ? (
@@ -226,9 +230,9 @@ export const ReportCard: FC<Props> = ({
             <button
               onClick={() => setShowHistorial(false)}
               style={{
-                marginTop: "1rem", background: "#a78bfa", color: "white",
-                border: "none", borderRadius: "6px", padding: "8px 20px",
-                cursor: "pointer", fontWeight: "bold",
+                marginTop: "1.5rem", background: "#a78bfa", color: "white",
+                border: "none", borderRadius: "8px", padding: "10px 0",
+                cursor: "pointer", fontWeight: "bold", width: "100%", fontSize: "0.95rem",
               }}
             >
               Cerrar

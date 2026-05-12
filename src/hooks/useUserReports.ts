@@ -22,18 +22,20 @@ export const useUserReports = () => {
 
         const activos: Report[] = reportesDelUsuario
           .filter((r) => r.estado?.toUpperCase() === "VERIFICADO")
-          .map((r) => ({
-            // FIX: usar $oid para obtener el ObjectId real de MongoDB
-            id: r.id?.$oid ?? r.id?.toString() ?? String(r.id),
-            titulo: r.titulo,
-            descripcion: r.descripcion,
-            categoria: r.categoria,
-            ubicacion: r.ubicacion?.direccion ?? "Sin dirección",
-            estado: r.estado,
-            fecha: new Date(r.fechaCreacion).toLocaleString(),
-            imagenUrl: r.imagenes?.find((img: string) => img && img.length > 0) ?? "",
-            importante: r.importante ?? false,
-          }));
+          .map((r) => {
+            console.log("useUserReports ID:", typeof r.id, JSON.stringify(r.id));
+            return {
+              id: r.id?.$oid ?? r.id?.toString() ?? String(r.id),
+              titulo: r.titulo,
+              descripcion: r.descripcion,
+              categoria: r.categoria,
+              ubicacion: r.ubicacion?.direccion ?? "Sin dirección",
+              estado: r.estado,
+              fecha: new Date(r.fechaCreacion).toLocaleString(),
+              imagenUrl: r.imagenes?.find((img: string) => img && img.length > 0) ?? "",
+              importante: r.importante ?? false,
+            };
+          });
 
         setReportes(activos);
         setUsuario({

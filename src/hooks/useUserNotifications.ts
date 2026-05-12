@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import { Client } from "@stomp/stompjs";
 import SockJS from "sockjs-client/dist/sockjs";
 import useAuth from "./useAuth";
+import { getUsuarioPorEmail } from "../features/user/userServices/api"; // ✅ Importar
 
 export interface Notification {
   id: number;
@@ -23,9 +24,22 @@ export const useUserNotifications = () => {
   const { email } = useAuth();
 
   useEffect(() => {
-    if (email) {
-      setUsuario({ nombre: email, rol: "usuario" });
-    }
+    // ✅ Función async interna para obtener el nombre real
+    const cargarUsuario = async () => {
+      if (email) {
+        try {
+          const data = await getUsuarioPorEmail(email);
+          setUsuario({
+            nombre: data.mensaje?.nombre ?? email, // ✅ Nombre real, cae al email si falla
+            rol: data.mensaje?.rol ?? "usuario",
+          });
+        } catch {
+          setUsuario({ nombre: email, rol: "usuario" }); // Fallback
+        }
+      }
+    };
+
+    cargarUsuario();
 
     // Conectar al WebSocket del backend
     const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:8080";
@@ -37,7 +51,6 @@ export const useUserNotifications = () => {
       reconnectDelay: 5000,
       onConnect: () => {
         console.log("✅ WebSocket conectado");
-        // Suscribirse al topic de reportes
         client.subscribe("/topic/reports", (message) => {
           try {
             const reporte = JSON.parse(message.body);
@@ -54,12 +67,8 @@ export const useUserNotifications = () => {
           }
         });
       },
-      onDisconnect: () => {
-        console.log("WebSocket desconectado");
-      },
-      onStompError: (frame) => {
-        console.error("Error STOMP:", frame);
-      },
+      onDisconnect: () => console.log("WebSocket desconectado"),
+      onStompError: (frame) => console.error("Error STOMP:", frame),
     });
 
     client.activate();
@@ -76,9 +85,7 @@ export const useUserNotifications = () => {
     );
   };
 
-  const limpiarNotificaciones = () => {
-    setNotificaciones([]);
-  };
+  const limpiarNotificaciones = () => setNotificaciones([]);
 
   return { notificaciones, usuario, marcarLeido, limpiarNotificaciones };
 };

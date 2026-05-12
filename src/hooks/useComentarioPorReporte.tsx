@@ -15,7 +15,7 @@ export const useComentariosPorReporte = (reporteId: string) => {
         id: c.id,
         mensaje: c.contenido,
         fecha: new Date(c.fecha).toLocaleString(),
-        usuario: c.idUsuario || "Desconocido",
+        usuario: c.nombreUsuario || c.idUsuario || "Desconocido", // ✅ Usa nombre real, cae a id si no hay
       }));
 
       setComentarios(mapeados);

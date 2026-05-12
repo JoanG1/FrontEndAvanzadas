@@ -15,8 +15,8 @@ export const useReportesPendientesAdmin = () => {
         getReportesPendientes(),
         getUsuarioPorEmail(email),
       ]);
-
       const pendientes: Report[] = todos.map((r) => {
+        console.log("ID tipo:", typeof r.id, "valor:", JSON.stringify(r.id));
         return {
           id: r.id?.$oid ?? r.id?.toString() ?? String(r.id),
           titulo: r.titulo,
@@ -30,7 +30,6 @@ export const useReportesPendientesAdmin = () => {
           seguidores: r.seguidores?.length ?? 0,
         };
       });
-
       setReportes(pendientes);
       setUsuario({
         nombre: usuarioData.mensaje?.nombre ?? email,
@@ -42,6 +41,5 @@ export const useReportesPendientesAdmin = () => {
   }, [email]);
 
   useEffect(() => { fetchDatos(); }, [fetchDatos]);
-
   return { reportes, usuario, refetch: fetchDatos };
 };

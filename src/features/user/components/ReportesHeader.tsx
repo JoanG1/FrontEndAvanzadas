@@ -35,7 +35,7 @@ export const ReportesHeader: FC<Props> = ({ usuario, titulo }) => {
         </div>
       </div>
 
-      <h2 className="header-title">{titulo}</h2>
+      <h2 className="header-title" style={{ textAlign: "center", flex: 1 }}>{titulo}</h2>
 
       <div className="fecha-hora">{horaActual}</div>
     </div>
