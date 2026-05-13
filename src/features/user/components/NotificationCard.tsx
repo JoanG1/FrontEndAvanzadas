@@ -4,10 +4,14 @@ import "../../../styles/Reports.css";
 
 interface Props {
   notificacion: Notification;
-  onMarcarLeido?: (id: number) => void;
+  onMarcarLeido?: (id: string) => void;
 }
 
 export const NotificationCard: FC<Props> = ({ notificacion, onMarcarLeido }) => {
+  const icono = notificacion.tipo === "comentario" ? "💬"
+    : notificacion.tipo === "estado" ? "🔔"
+    : "📌";
+
   return (
     <div
       className="report-card"
@@ -25,6 +29,7 @@ export const NotificationCard: FC<Props> = ({ notificacion, onMarcarLeido }) => 
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
         <div style={{ flex: 1 }}>
           <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "4px" }}>
+            <span style={{ fontSize: "1rem" }}>{icono}</span>
             {!notificacion.leido && (
               <span style={{
                 width: "8px", height: "8px", borderRadius: "50%",

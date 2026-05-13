@@ -180,3 +180,16 @@ export const getHistorialReporte = async (idReporte: string): Promise<any[]> => 
   return response.data;
 };
 
+// ─── NOTIFICACIONES ───
+export const getNotificaciones = async (idUsuario: string) => {
+  const response = await apiClient.get(`/api/notificaciones/${idUsuario}`);
+  return response.data;
+};
+
+export const marcarNotificacionLeida = async (idNotificacion: string) => {
+  await apiClient.put(`/api/notificaciones/${idNotificacion}/leer`);
+};
+
+export const marcarTodasNotificacionesLeidas = async (idUsuario: string) => {
+  await apiClient.put(`/api/notificaciones/usuario/${idUsuario}/leer-todas`);
+};

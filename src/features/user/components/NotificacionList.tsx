@@ -4,11 +4,17 @@ import { NotificationCard } from "./NotificationCard";
 
 interface Props {
   notificaciones: Notification[];
-  onMarcarLeido?: (id: number) => void;
+  onMarcarLeido?: (id: string) => void;
+  onMarcarTodasLeidas?: () => void;
   onLimpiar?: () => void;
 }
 
-export const NotificationList: FC<Props> = ({ notificaciones, onMarcarLeido, onLimpiar }) => {
+export const NotificationList: FC<Props> = ({
+  notificaciones,
+  onMarcarLeido,
+  onMarcarTodasLeidas,
+  onLimpiar,
+}) => {
   const sinLeer = notificaciones.filter((n) => !n.leido).length;
 
   if (notificaciones.length === 0) {
@@ -21,11 +27,25 @@ export const NotificationList: FC<Props> = ({ notificaciones, onMarcarLeido, onL
 
   return (
     <div className="report-list">
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem" }}>
+      <div style={{
+        display: "flex", justifyContent: "space-between",
+        alignItems: "center", marginBottom: "1rem", flexWrap: "wrap", gap: "8px"
+      }}>
         <span style={{ fontSize: "0.85rem", color: "rgba(255,255,255,0.6)" }}>
           {sinLeer > 0 ? `${sinLeer} sin leer` : "Todo leído ✓"}
         </span>
-        {notificaciones.length > 0 && (
+        <div style={{ display: "flex", gap: "8px" }}>
+          {sinLeer > 0 && (
+            <button
+              onClick={onMarcarTodasLeidas}
+              style={{
+                background: "transparent", color: "#a78bfa", border: "1px solid #a78bfa",
+                borderRadius: "6px", padding: "3px 10px", cursor: "pointer", fontSize: "0.75rem"
+              }}
+            >
+              Marcar todas leídas
+            </button>
+          )}
           <button
             onClick={onLimpiar}
             style={{
@@ -33,9 +53,9 @@ export const NotificationList: FC<Props> = ({ notificaciones, onMarcarLeido, onL
               borderRadius: "6px", padding: "3px 10px", cursor: "pointer", fontSize: "0.75rem"
             }}
           >
-            Limpiar todo
+            Limpiar vista
           </button>
-        )}
+        </div>
       </div>
       {notificaciones.map((n) => (
         <NotificationCard key={n.id} notificacion={n} onMarcarLeido={onMarcarLeido} />

@@ -6,7 +6,13 @@ import "../styles/Reports.css";
 import { UserProfileIcon } from "../components/ui/UserProfileIcon";
 
 const MisNotificaciones: React.FC = () => {
-  const { notificaciones, usuario, marcarLeido, limpiarNotificaciones } = useUserNotifications();
+  const {
+    notificaciones,
+    usuario,
+    marcarLeido,
+    marcarTodasLeidas,
+    limpiarNotificaciones,
+  } = useUserNotifications();
 
   return (
     <div className="page-background">
@@ -16,6 +22,7 @@ const MisNotificaciones: React.FC = () => {
         <NotificationList
           notificaciones={notificaciones}
           onMarcarLeido={marcarLeido}
+          onMarcarTodasLeidas={marcarTodasLeidas}
           onLimpiar={limpiarNotificaciones}
         />
       </div>
